@@ -16,6 +16,7 @@ import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
+import NotFound from "./components/layout/NotFound";
 
 // Redux
 import { Provider } from "react-redux";
@@ -37,14 +38,14 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-          <Alert />{" "}
-          {/* Alert should often be outside or wrap the main content */}
           <Routes>
             <Route path="/" element={<Landing />} />{" "}
             <Route
               path="/*"
               element={
                 <section className="container">
+
+                  <Alert />{" "}
                   <Routes>
                     {" "}
                     <Route path="/login" element={<Login />} />
@@ -68,6 +69,7 @@ const App = () => {
                       <Route path="/posts/:id" element={<Post />} />
                       {/* Add more private routes here later if needed */}
                     </Route>
+                    <Route path="*" element={<NotFound />} />
                   </Routes>
                 </section>
               }
