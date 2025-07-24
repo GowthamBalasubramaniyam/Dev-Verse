@@ -55,7 +55,7 @@ router.post('/',[
   jwt.sign(
     payload,
     config.get('JWTSecret'), // Get the JWT secret from the config
-    {expiresIn: 360000}, // Token expiration time
+    {expiresIn: "1d"}, // Token expiration time
     (err, token) => {
       if(err) throw err;
       res.json({token}); // Send the token in the response
