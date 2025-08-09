@@ -22,6 +22,8 @@ export const POST_ERROR = 'POST_ERROR';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
 export const DELETE_POST = 'DELETE_POST';
 export const ADD_POST = 'ADD_POST';
-
+export const AVATAR_UPDATE_SUCCESS = "AVATAR_UPDATE_SUCCESS";
+export const UPDATE_USER_AVATAR_IN_POSTS = "UPDATE_USER_AVATAR_IN_POSTS";
+export const UPDATE_AUTH_AVATAR = "UPDATE_AUTH_AVATAR";
 // this file handles the action types for user registration in Redux
 // It exports constants for successful and failed registration actions

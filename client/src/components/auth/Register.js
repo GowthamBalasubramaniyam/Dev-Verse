@@ -21,84 +21,95 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert("Passwords do not match", "Danger");
+      setAlert("Passwords do not match", "danger");
     } else {
       register({ name, email, password });
     }
   };
 
-// Redirect if registered
+  // Redirect if registered
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
 
   return (
-    <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Create Your Account
-      </p>
-      <form className="form" onSubmit={onSubmit}>
+    <div className="container">
+      <form className="register-form" onSubmit={onSubmit}>
+        <h1 className="register-title">Create Your Account</h1>
+        <p className="register-message">
+          Join our developer community and showcase your skills
+        </p>
+
         <div className="form-group">
           <input
             type="text"
-            placeholder="Name"
+            className="form-input"
             name="name"
             value={name}
             onChange={onChange}
             required
           />
+          <span className="form-label">Name</span>
         </div>
+
         <div className="form-group">
           <input
             type="email"
-            placeholder="Email Address"
+            className="form-input"
             name="email"
             value={email}
             onChange={onChange}
             required
           />
-          <small className="form-text">
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
+          <span className="form-label">Email Address</span>
         </div>
+
         <div className="form-group">
           <input
             type="password"
-            placeholder="Password"
+            className="form-input"
             name="password"
             value={password}
             onChange={onChange}
             minLength="6"
+            required
           />
+          <span className="form-label">Password</span>
         </div>
+
         <div className="form-group">
           <input
             type="password"
-            placeholder="Confirm Password"
+            className="form-input"
             name="password2"
             value={password2}
             onChange={onChange}
             minLength="6"
+            required
           />
+          <span className="form-label">Confirm Password</span>
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
+
+        <button type="submit" className="register-submit">
+          Create Account
+        </button>
+
+        <p className="register-signin">
+          Already have an account? <Link to="/login">Sign In</Link>
+        </p>
       </form>
-      <p className="my-1">
-        Already have an account? <Link to="/login">Sign In</Link>
-      </p>
-    </Fragment>
+    </div>
   );
 };
+
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, register})(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);

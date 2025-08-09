@@ -63,19 +63,21 @@ export const removeLike = (id) => async (dispatch) => {
 
 //delete post
 export const deletePost = (id) => async (dispatch) => {
-  try {
-    await axios.delete(`/api/posts/${id}`);
-    dispatch({
-      type: DELETE_POST,
-      payload: id,
-    });
-    dispatch(setAlert("Post removed", "success"));
-    dispatch(getPosts()); // Refresh posts after deletion
-  } catch (err) {
-    dispatch({
-      type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
+  if (window.confirm("Are you sure? This action cannot be undone.")) {
+    try {
+      await axios.delete(`/api/posts/${id}`);
+      dispatch({
+        type: DELETE_POST,
+        payload: id,
+      });
+      dispatch(setAlert("Post removed", "success"));
+      dispatch(getPosts()); // Refresh posts after deletion
+    } catch (err) {
+      dispatch({
+        type: POST_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
   }
 };
 
@@ -143,20 +145,20 @@ export const addComment = (postId, formData) => async (dispatch) => {
 
 // Action to remove a comment from a post
 export const deleteComment = (postId, commentId) => async (dispatch) => {
-  try {
-    await axios.delete(
-      `/api/posts/comment/${postId}/${commentId}`
-    );
-    dispatch({
-      type: REMOVE_COMMENT,
-      payload: commentId,
-    });
-    dispatch(setAlert("Comment Deleted", "success"));
-    dispatch(getPosts()); // Refresh posts after adding a new one
-  } catch (err) {
-    dispatch({
-      type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  } 
+ if (window.confirm("Are you sure? This action cannot be undone.")) {
+   try {
+     await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
+     dispatch({
+       type: REMOVE_COMMENT,
+       payload: commentId,
+     });
+     dispatch(setAlert("Comment Deleted", "success"));
+     dispatch(getPosts()); // Refresh posts after adding a new one
+   } catch (err) {
+     dispatch({
+       type: POST_ERROR,
+       payload: { msg: err.response.statusText, status: err.response.status },
+     });
+   }
+ }
 };

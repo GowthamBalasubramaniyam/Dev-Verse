@@ -22,7 +22,7 @@ const Dashboard = ({
 
   if (authLoading || profileLoading || !user) {
     return <Spinner />;
-  }
+  } 
 
   return (
     <Fragment>
@@ -38,8 +38,8 @@ const Dashboard = ({
           {/* Add other components like Education, Skills, etc. here */}
 
           <div>
-            <button className="btn btn-danger" onClick={()=> deleteAccount()}>
-              <i className="fas fa-user-minus"></i> Delete My Account
+            <button className="btn btn-danger" onClick={() => deleteAccount()}>
+              <i className="fas fa-user-minus"></i>  Delete My Account
             </button>
           </div>
         </Fragment>
@@ -49,6 +49,7 @@ const Dashboard = ({
           <Link to="/create-profile" className="btn btn-primary my-1">
             Create Profile
           </Link>
+          
         </Fragment>
       )}
     </Fragment>

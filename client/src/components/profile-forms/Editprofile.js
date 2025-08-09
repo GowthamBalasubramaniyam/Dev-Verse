@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
-import Spinner from "../layout/Spinner"; // Make sure you have a Spinner component
+import Spinner from "../layout/Spinner";
+import AvatarUpload from "../../components/dashboard/AvatarUpload"; // Import the AvatarUpload component
 
 const EditProfile = ({
   profile: { profile, loading },
@@ -28,49 +29,36 @@ const EditProfile = ({
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
-  // useEffect to populate form data when profile is ready
-  useEffect(() => {
-    if (!loading && profile && profile.length > 0) {
-      const profileData = profile[0]; // <-- Get the actual profile object from the array
 
+  // ✅ Load profile on first mount
+  useEffect(() => {
+    getCurrentProfile();
+  }, [getCurrentProfile]);
+
+  // ✅ When profile is loaded, populate the form
+  useEffect(() => {
+    if (!loading && profile) {
       setFormData({
-        company: !profileData.company ? "" : profileData.company,
-        website: !profileData.website ? "" : profileData.website,
-        location: !profileData.location ? "" : profileData.location,
-        status: !profileData.status ? "" : profileData.status,
-        skills: !profileData.skills ? "" : profileData.skills.join(","),
-        githubusername: !profileData.githubusername
-          ? ""
-          : profileData.githubusername,
-        bio: !profileData.bio ? "" : profileData.bio,
-        // Ensure checks for 'social' object before accessing its properties
-        twitter:
-          !profileData.social || !profileData.social.twitter
-            ? ""
-            : profileData.social.twitter,
-        facebook:
-          !profileData.social || !profileData.social.facebook
-            ? ""
-            : profileData.social.facebook,
-        linkedin:
-          !profileData.social || !profileData.social.linkedin
-            ? ""
-            : profileData.social.linkedin,
-        youtube:
-          !profileData.social || !profileData.social.youtube
-            ? ""
-            : profileData.social.youtube,
-        instagram:
-          !profileData.social || !profileData.social.instagram
-            ? ""
-            : profileData.social.instagram,
+        company: profile.company || "",
+        website: profile.website || "",
+        location: profile.location || "",
+        status: profile.status || "",
+        skills: profile.skills ? profile.skills.join(",") : "",
+        githubusername: profile.githubusername || "",
+        bio: profile.bio || "",
+        twitter: profile.social?.twitter || "",
+        facebook: profile.social?.facebook || "",
+        linkedin: profile.social?.linkedin || "",
+        youtube: profile.social?.youtube || "",
+        instagram: profile.social?.instagram || "",
       });
-    } else {
-      console.log(
-        "useEffect 2: Not populating formData (loading or profile is not a valid array)"
-      );
+
+      // Show social inputs if any social links exist
+      if (profile.social && Object.values(profile.social).some(Boolean)) {
+        toggleSocialInputs(true);
+      }
     }
-  }, [loading, profile]); // Dependency array remains the same
+  }, [loading, profile]);
 
   const {
     company,
@@ -92,202 +80,196 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // The `true` parameter usually indicates it's an "edit" operation
-    createProfile(formData, navigate, true);
+    createProfile(formData, navigate, !!profile);
   };
 
-  return (
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
     <Fragment>
-      {loading ? ( // Display spinner while loading profile
-        <Spinner />
-      ) : (
-        <Fragment>
-          {/* Conditional heading */}
-          <h1 className="large text-primary">
-            {profile ? "Edit Your Profile" : "Create Your Profile"}
-          </h1>
-          <p className="lead">
-            <i className="fas fa-user" />{" "}
-            {profile
-              ? "Make changes to your profile"
-              : "Let's get some information to make your profile stand out"}
-          </p>
-          <small>* = required field</small>
-          <form className="form" onSubmit={(e) => onSubmit(e)}>
-            {/* ... rest of your form fields ... */}
+      <h1 className="large text-primary">
+        {profile ? "Edit Your Profile" : "Create Your Profile"}
+      </h1>
+      <p className="lead">
+        <i className="fas fa-user" />{" "}
+        {profile
+          ? "Make changes to your profile"
+          : "Let's get some information to make your profile stand out"}
+      </p>
+      <small>* = required field</small>
+      <form className="form" onSubmit={onSubmit}>
+        <div className="form-group">
+          <select name="status" value={status} onChange={onChange}>
+            <option value="0">* Select Professional Status</option>
+            <option value="Developer">Developer</option>
+            <option value="Junior Developer">Junior Developer</option>
+            <option value="Senior Developer">Senior Developer</option>
+            <option value="Manager">Manager</option>
+            <option value="Student or Learning">Student or Learning</option>
+            <option value="Instructor">Instructor or Teacher</option>
+            <option value="Intern">Intern</option>
+            <option value="Other">Other</option>
+          </select>
+          <small className="form-text">
+            Give us an idea of where you are at in your career
+          </small>
+        </div>
 
-            <div className="form-group">
-              <select name="status" value={status} onChange={onChange}>
-                <option value="0">* Select Professional Status</option>
-                <option value="Developer">Developer</option>
-                <option value="Junior Developer">Junior Developer</option>
-                <option value="Senior Developer">Senior Developer</option>
-                <option value="Manager">Manager</option>
-                <option value="Student or Learning">Student or Learning</option>
-                <option value="Instructor">Instructor or Teacher</option>
-                <option value="Intern">Intern</option>
-                <option value="Other">Other</option>
-              </select>
-              <small className="form-text">
-                Give us an idea of where you are at in your career
-              </small>
-            </div>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Company"
+            name="company"
+            value={company}
+            onChange={onChange}
+          />
+          <small className="form-text">
+            Could be your own company or one you work for
+          </small>
+        </div>
 
-            <div className="form-group">
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Website"
+            name="website"
+            value={website}
+            onChange={onChange}
+          />
+          <small className="form-text">
+            Could be your own or a company website
+          </small>
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Location"
+            name="location"
+            value={location}
+            onChange={onChange}
+          />
+          <small className="form-text">
+            City & state suggested (e.g. Boston, MA)
+          </small>
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="* Skills"
+            name="skills"
+            value={skills}
+            onChange={onChange}
+          />
+          <small className="form-text">
+            Please use comma separated values (e.g. HTML,CSS,JavaScript)
+          </small>
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Github Username"
+            name="githubusername"
+            value={githubusername}
+            onChange={onChange}
+          />
+          <small className="form-text">
+            Include your GitHub username to show your latest repos
+          </small>
+        </div>
+
+        <div className="form-group">
+          <textarea
+            placeholder="A short bio of yourself"
+            name="bio"
+            value={bio}
+            onChange={onChange}
+          ></textarea>
+          <small className="form-text">Tell us a little about yourself</small>
+        </div>
+
+          <div className="my-2">
+                      <AvatarUpload />{" "}
+                      {/* <-- Also add it here for users without a profile yet */}
+                    </div>
+
+        <div className="my-2">
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={() => toggleSocialInputs(!displaySocialInputs)}
+          >
+            Add Social Network Links
+          </button>
+          <span>Optional</span>
+        </div>
+
+        {displaySocialInputs && (
+          <Fragment>
+            <div className="form-group social-input">
+              <i className="fab fa-twitter fa-2x" />
               <input
                 type="text"
-                placeholder="Company"
-                name="company"
-                value={company}
+                placeholder="Twitter URL"
+                name="twitter"
+                value={twitter}
                 onChange={onChange}
               />
-              <small className="form-text">
-                Could be your own company or one you work for
-              </small>
             </div>
 
-            <div className="form-group">
+            <div className="form-group social-input">
+              <i className="fab fa-facebook fa-2x" />
               <input
                 type="text"
-                placeholder="Website"
-                name="website"
-                value={website}
+                placeholder="Facebook URL"
+                name="facebook"
+                value={facebook}
                 onChange={onChange}
               />
-              <small className="form-text">
-                Could be your own or a company website
-              </small>
             </div>
 
-            <div className="form-group">
+            <div className="form-group social-input">
+              <i className="fab fa-youtube fa-2x" />
               <input
                 type="text"
-                placeholder="Location"
-                name="location"
-                value={location}
+                placeholder="YouTube URL"
+                name="youtube"
+                value={youtube}
                 onChange={onChange}
               />
-              <small className="form-text">
-                City & state suggested (eg. Boston, MA)
-              </small>
             </div>
 
-            <div className="form-group">
+            <div className="form-group social-input">
+              <i className="fab fa-linkedin fa-2x" />
               <input
                 type="text"
-                placeholder="* Skills"
-                name="skills"
-                value={skills}
+                placeholder="LinkedIn URL"
+                name="linkedin"
+                value={linkedin}
                 onChange={onChange}
               />
-              <small className="form-text">
-                Please use comma separated values (eg. HTML,CSS,JavaScript)
-              </small>
             </div>
 
-            <div className="form-group">
+            <div className="form-group social-input">
+              <i className="fab fa-instagram fa-2x" />
               <input
                 type="text"
-                placeholder="Github Username"
-                name="githubusername"
-                value={githubusername}
+                placeholder="Instagram URL"
+                name="instagram"
+                value={instagram}
                 onChange={onChange}
               />
-              <small className="form-text">
-                If you want your latest repos and a Github link, include your
-                username
-              </small>
             </div>
+          </Fragment>
+        )}
 
-            <div className="form-group">
-              <textarea
-                placeholder="A short bio of yourself"
-                name="bio"
-                value={bio}
-                onChange={onChange}
-              ></textarea>
-              <small className="form-text">
-                Tell us a little about yourself
-              </small>
-            </div>
-
-            <div className="my-2">
-              <button
-                type="button"
-                className="btn btn-light"
-                onClick={() => toggleSocialInputs(!displaySocialInputs)}
-              >
-                Add Social Network Links
-              </button>
-              <span>Optional</span>
-            </div>
-
-            {displaySocialInputs && (
-              <Fragment>
-                <div className="form-group social-input">
-                  <i className="fab fa-twitter fa-2x" />
-                  <input
-                    type="text"
-                    placeholder="Twitter URL"
-                    name="twitter"
-                    value={twitter}
-                    onChange={onChange}
-                  />
-                </div>
-
-                <div className="form-group social-input">
-                  <i className="fab fa-facebook fa-2x" />
-                  <input
-                    type="text"
-                    placeholder="Facebook URL"
-                    name="facebook"
-                    value={facebook}
-                    onChange={onChange}
-                  />
-                </div>
-
-                <div className="form-group social-input">
-                  <i className="fab fa-youtube fa-2x" />
-                  <input
-                    type="text"
-                    placeholder="YouTube URL"
-                    name="youtube"
-                    value={youtube}
-                    onChange={onChange}
-                  />
-                </div>
-
-                <div className="form-group social-input">
-                  <i className="fab fa-linkedin fa-2x" />
-                  <input
-                    type="text"
-                    placeholder="Linkedin URL"
-                    name="linkedin"
-                    value={linkedin}
-                    onChange={onChange}
-                  />
-                </div>
-
-                <div className="form-group social-input">
-                  <i className="fab fa-instagram fa-2x" />
-                  <input
-                    type="text"
-                    placeholder="Instagram URL"
-                    name="instagram"
-                    value={instagram}
-                    onChange={onChange}
-                  />
-                </div>
-              </Fragment>
-            )}
-
-            <input type="submit" className="btn btn-primary my-1" />
-            <Link className="btn btn-light my-1" to="/dashboard">
-              Go Back
-            </Link>
-          </form>
-        </Fragment>
-      )}
+        <input type="submit" className="btn btn-primary my-1" />
+        <Link className="btn btn-light my-1" to="/dashboard">
+          Go Back
+        </Link>
+      </form>
     </Fragment>
   );
 };

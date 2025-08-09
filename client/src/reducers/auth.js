@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   ACCOUNT_DELETED,
+  AVATAR_UPDATE_SUCCESS,
 } from "../actions/types";
 
 const initialState = {
@@ -26,6 +27,12 @@ export default function auth(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
         user: payload,
+      };
+    case AVATAR_UPDATE_SUCCESS: // <-- Add this new case
+      return {
+        ...state,
+        user: { ...state.user, avatar: payload.avatar },
+        loading: false,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:

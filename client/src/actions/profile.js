@@ -7,7 +7,10 @@ import {
   GET_PROFILES,
   PROFILE_ERROR,
   UPDATE_PROFILE,
-  GET_REPOS
+  GET_REPOS,
+  AVATAR_UPDATE_SUCCESS,
+  UPDATE_USER_AVATAR_IN_POSTS,
+  UPDATE_AUTH_AVATAR,
 } from "./types";
 
 // Get current user's profile
@@ -212,43 +215,47 @@ export const addEducation = (formData, navigate) => async (dispatch) => {
 
 // Delete experience from profile
 export const deleteExperience = (id) => async (dispatch) => {
-  try {
-    const res = await axios.delete(`/api/profile/experience/${id}`);
+  if (window.confirm("Are you sure? This action cannot be undone.")) {
+    try {
+      const res = await axios.delete(`/api/profile/experience/${id}`);
 
-    dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data,
-    });
-    dispatch(setAlert("Experience Removed", "success"));
-  } catch (err) {
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: {
-        msg: err.response?.statusText,
-        status: err.response?.status,
-      },
-    });
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data,
+      });
+      dispatch(setAlert("Experience Removed", "success"));
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response?.statusText,
+          status: err.response?.status,
+        },
+      });
+    }
   }
 };
 
 // Delete education from profile
 export const deleteEducation = (id) => async (dispatch) => {
-  try {
-    const res = await axios.delete(`/api/profile/education/${id}`);
+  if (window.confirm("Are you sure? This action cannot be undone.")) {
+    try {
+      const res = await axios.delete(`/api/profile/education/${id}`);
 
-    dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data,
-    });
-    dispatch(setAlert("Education Removed", "success"));
-  } catch (err) {
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: {
-        msg: err.response?.statusText,
-        status: err.response?.status,
-      },
-    });
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data,
+      });
+      dispatch(setAlert("Education Removed", "success"));
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response?.statusText,
+          status: err.response?.status,
+        },
+      });
+    }
   }
 };
 
@@ -272,4 +279,77 @@ export const deleteAccount = () => async (dispatch) => {
       });
     }
   }
+};
+
+// Upload or Update Avatar
+export const uploadAvatar = (formData) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    const res = await axios.post('/api/profile/avatar', formData, config);
+    
+    console.log('🚀 Avatar upload response:', res.data); // Debug log
+
+    // Update profile/user avatar
+    dispatch({
+      type: AVATAR_UPDATE_SUCCESS, // Make sure this exists in your types.js
+      payload: res.data.avatar // Just the avatar URL
+    });
+
+    // Update avatar in all posts by this user
+    // Make sure your backend returns userId or use auth.user._id
+    const userId = res.data.userId || res.data.user || res.data._id;
+    if (userId && res.data.avatar) {
+      dispatch(updateUserAvatarInPosts(userId, res.data.avatar));
+    }
+
+    // Update in auth state
+    if (res.data.avatar) {
+      dispatch(updateAuthAvatar(res.data.avatar));
+    }
+
+    dispatch(setAlert('Avatar Updated Successfully', 'success'));
+    
+  } catch (err) {
+    console.error('❌ Avatar upload error:', err.response?.data); // Debug log
+    
+    const errors = err.response?.data?.errors;
+    const errorMsg = err.response?.data?.msg;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    } else if (errorMsg) {
+      dispatch(setAlert(errorMsg, 'danger'));
+    } else {
+      dispatch(setAlert('Avatar upload failed', 'danger'));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { 
+        msg: err.response?.statusText || 'Upload failed', 
+        status: err.response?.status || 500
+      }
+    });
+  }
+};
+
+
+export const updateUserAvatarInPosts = (userId, newAvatar) => (dispatch) => {
+  dispatch({
+    type: UPDATE_USER_AVATAR_IN_POSTS,
+    payload: { userId, newAvatar },
+  });
+};
+
+// Update avatar in auth state
+export const updateAuthAvatar = (newAvatar) => (dispatch) => {
+  dispatch({
+    type: UPDATE_AUTH_AVATAR,
+    payload: newAvatar,
+  });
 };

@@ -5,12 +5,24 @@ import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
 import { Fragment } from "react/jsx-runtime";
 
-const Navbar = ({  auth : { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const handleImageError = (e) => {
+    console.log("Favicon failed to load, using fallback");
+    e.target.src = "/favicon.ico"; // Fallback to favicon.ico
+  };
+
   const authLinks = (
     <ul>
       <li>
+        <Link to="/dashboard">
+          <i className="fas fa-user" />{" "}
+          <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+      <li>
         <Link to="/profiles">
-          Developers
+          <i className="fas fa-laptop-code" />{" "}
+          <span className="hide-sm">Developers</span>
         </Link>
       </li>
       <li>
@@ -19,12 +31,7 @@ const Navbar = ({  auth : { isAuthenticated, loading }, logout }) => {
           <span className="hide-sm">Posts</span>
         </Link>
       </li>
-      <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user" />{" "}
-          <span className="hide-sm">Dashboard</span>
-        </Link>
-      </li>
+
       <li>
         <a
           href="#!"
@@ -54,10 +61,16 @@ const Navbar = ({  auth : { isAuthenticated, loading }, logout }) => {
     </ul>
   );
   return (
-    <nav className="navbar bg-dark">
+    <nav className="navbar bg-light">
       <h1>
         <Link to="/">
-          <i className="fas fa-code"></i> DevConnector
+          <img
+            src="/favicon-96x96.png"
+            className="favicon-icon"
+            alt="Dev-Verse Icon"
+            onError={handleImageError}
+          />{" "}
+          <strong>Dev-Verse</strong>
         </Link>
       </h1>
       {!loading && (

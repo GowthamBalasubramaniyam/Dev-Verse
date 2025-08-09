@@ -4,17 +4,15 @@ import { format, parseISO } from "date-fns";
 
 import { connect } from "react-redux";
 import { deleteEducation } from "../../actions/profile";
+
 const Education = ({ education, deleteEducation }) => {
-  const educations = education.map((edu) => (
+  const educations = (education || []).map((edu) => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
       <td className="hide-sm">{edu.degree}</td>
       <td>
         {format(parseISO(edu.from), "yyyy/MM/dd")} -{" "}
-        {edu.to === null
-          ? "Now"
-          : // Replaced <Moment format="YYYY/MM/DD">{edu.to}</Moment>
-            format(parseISO(edu.to), "yyyy/MM/dd")}
+        {edu.to === null ? "Now" : format(parseISO(edu.to), "yyyy/MM/dd")}
       </td>
       <td>
         <button
@@ -30,18 +28,21 @@ const Education = ({ education, deleteEducation }) => {
   return (
     <Fragment>
       <h2 className="my-2">Education Credentials</h2>
-      <table className="table">
+      {education && education.length > 0 ? (
+        <table className="table">
         <thead>
           <tr>
-            <th>School</th> {/* Changed from Company to School to match data */}
-            <th className="hide-sm">Degree</th>{" "}
-            {/* Changed from Title to Degree to match data */}
+            <th>School</th>
+            <th className="hide-sm">Degree</th>
             <th className="hide-sm">Years</th>
             <th />
           </tr>
         </thead>
         <tbody>{educations}</tbody>
       </table>
+      ) : (
+        <p>No education credentials added yet</p>
+      )}
     </Fragment>
   );
 };

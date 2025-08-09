@@ -17,6 +17,8 @@ import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
 import NotFound from "./components/layout/NotFound";
+import AvatarUpload from "./components/dashboard/AvatarUpload";
+import Snackbar from "./components/layout/Snackbar"; 
 
 // Redux
 import { Provider } from "react-redux";
@@ -38,14 +40,13 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
+          <Snackbar />
           <Routes>
             <Route path="/" element={<Landing />} />{" "}
             <Route
               path="/*"
               element={
                 <section className="container">
-
-                  <Alert />{" "}
                   <Routes>
                     {" "}
                     <Route path="/login" element={<Login />} />
@@ -67,6 +68,7 @@ const App = () => {
                       <Route path="/add-education" element={<AddEducation />} />
                       <Route path="/posts" element={<Posts />} />
                       <Route path="/posts/:id" element={<Post />} />
+                      <Route path="/upload-avatar" element={<AvatarUpload />} />
                       {/* Add more private routes here later if needed */}
                     </Route>
                     <Route path="*" element={<NotFound />} />

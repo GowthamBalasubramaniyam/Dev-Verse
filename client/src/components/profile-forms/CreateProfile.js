@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile } from "../../actions/profile";
+import AvatarUpload from "../../components/dashboard/AvatarUpload"; // Import the AvatarUpload component
 
 const CreateProfile = ({ createProfile }) => {
   const navigate = useNavigate(); // ✅ Use this instead of withRouter/history
@@ -148,6 +149,11 @@ const CreateProfile = ({ createProfile }) => {
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
         </div>
+
+        <div className="my-2">
+                    <AvatarUpload />{" "}
+                    {/* <-- Also add it here for users without a profile yet */}
+                  </div>
 
         <div className="my-2">
           <button

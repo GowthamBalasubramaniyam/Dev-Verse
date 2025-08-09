@@ -16,13 +16,14 @@ router.post('/', [Authentication, [
         return res.status(400).json({errors: errors.array()});
     }
     try {
-        const user = await User.findById(req.user.id).select('-passwrod');
-        const newPost= new Post({
+        const user = await User.findById(req.user.id).select('-password'); // Fixed typo
+        
+        const newPost = new Post({
             text: req.body.text,
             name: user.name,
-            avarat: user.avatar,
             user: req.user.id
-        })
+        });
+        
         const post = await newPost.save();
         res.json(post);
     } catch(err) {
@@ -36,7 +37,10 @@ router.post('/', [Authentication, [
 // @access  Private
 router.get('/', Authentication, async (req, res) => {
     try {
-        const posts = await Post.find().sort({ date: -1 });
+        const posts = await Post.find()
+          .populate("user", ["name", "avatar"]) // Populate user data including avatar
+          .sort({ date: -1 });
+        res.json(posts);
         res.json(posts);
     } catch(err) {
         console.error(err.message);
@@ -49,7 +53,9 @@ router.get('/', Authentication, async (req, res) => {
 // @access  Private
 router.get('/:id', Authentication, async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.id)
+            .populate("user", ["name", "avatar"]) // Add this population
+          .populate("comments.user", ["name", "avatar"]);;
         if(!post) {
             return res.status(404).json({ msg: 'Post not found' });
         }
