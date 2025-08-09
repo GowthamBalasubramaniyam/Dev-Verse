@@ -19,7 +19,6 @@
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
     "config": "^4.0.0",
-    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.1",
     "experss": "^0.0.1-security",
