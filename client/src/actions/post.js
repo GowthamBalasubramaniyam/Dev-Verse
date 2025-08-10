@@ -18,7 +18,7 @@ export const getPosts = () => async (dispatch) => {
     console.log("GET_POSTS payload:", res.data);
     dispatch({
       type: GET_POSTS,
-      payload: res.data,
+      payload: Array.isArray(res.data) ? res.data : [], // Ensure payload is always an array
     });
   } catch (err) {
     dispatch({
