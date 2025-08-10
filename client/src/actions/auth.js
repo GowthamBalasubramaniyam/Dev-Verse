@@ -41,7 +41,7 @@ export const register =
 
     try {
       const res = await API.post("/api/users", body, config);
-
+      localStorage.setItem("token", res.data.token);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -67,7 +67,7 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const res = await API.post("/api/auth", body, config);
-
+    localStorage.setItem("token", res.data.token);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
