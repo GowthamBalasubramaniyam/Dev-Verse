@@ -549,37 +549,28 @@ button {
 }
 
 .form select {
-  /* Override default browser styling for select arrow */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"><path fill="%23fff" d="M0 6l10 10 10-10z"/></svg>');
-  /* Custom white arrow */
+  background-image: url('data:image/svg+xml;utf8,&lt;svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 20 20"&gt;&lt;path fill="%23fff" d="M0 6l10 10 10-10z"/&gt;&lt;/svg&gt;');
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 0.65rem auto;
   padding-right: 2.25rem;
-  /* Make space for the custom arrow */
 }
 
-/* Style for the options within the select dropdown */
 .form select option {
   background-color: #7678ED;
-  /* Dark background for options */
   color: var(--white);
-  /* White text for options */
   padding: 0.5rem;
-  /* Add some padding to options */
 }
 
-/* Improve consistency on focus for select */
 .form select:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.2);
 }
 
-/* Fix for disabled options (if any) */
 .form select option:disabled {
   color: var(--gray-medium);
 }
@@ -592,13 +583,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  /* Reduced from 20px to decrease height */
   max-width: 600px;
-  /* Increased from 450px to increase width */
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(15px);
   padding: 25px 40px;
-  /* Reduced vertical padding (25px) and increased horizontal padding (40px) */
   border-radius: 20px;
   position: relative;
   margin: 0 auto;
@@ -616,7 +604,6 @@ button {
   align-items: center;
   padding-left: 30px;
   margin-bottom: var(--spacing-sm);
-  /* Reduced from var(--spacing-md) */
 }
 
 .register-title::before,
@@ -646,7 +633,6 @@ button {
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   margin-bottom: var(--spacing-sm);
-  /* Reduced from var(--spacing-md) */
 }
 
 .register-signin {
@@ -654,7 +640,6 @@ button {
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   margin-top: var(--spacing-md);
-  /* Reduced from var(--spacing-lg) */
 }
 
 .register-signin a {
@@ -677,13 +662,11 @@ button {
 .register-form .form-group {
   position: relative;
   margin: var(--spacing-sm) 0;
-  /* Reduced from var(--spacing-md) */
 }
 
 .register-form .form-group .form-input {
   width: 100%;
   padding: 12px 15px 18px 15px;
-  /* Reduced vertical padding */
   outline: 0;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
@@ -702,7 +685,6 @@ button {
   position: absolute;
   left: 15px;
   top: 12px;
-  /* Adjusted for reduced input padding */
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9em;
   cursor: text;
@@ -712,14 +694,12 @@ button {
 
 .register-form .form-group .form-input:placeholder-shown+.form-label {
   top: 12px;
-  /* Adjusted for reduced input padding */
   font-size: 0.9em;
 }
 
 .register-form .form-group .form-input:focus+.form-label,
 .register-form .form-group .form-input:valid+.form-label {
   top: 2px;
-  /* Slightly adjusted for better positioning */
   font-size: 0.7em;
   font-weight: 600;
   color: var(--primary-color);
@@ -744,7 +724,6 @@ button {
   outline: none;
   background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
   padding: 12px;
-  /* Reduced from 15px */
   border-radius: 12px;
   color: var(--white);
   font-size: 16px;
@@ -754,7 +733,6 @@ button {
   transition: all 0.3s ease;
   cursor: pointer;
   margin-top: var(--spacing-sm);
-  /* Reduced from var(--spacing-md) */
 }
 
 .register-submit:hover {
@@ -779,7 +757,6 @@ button {
   }
 }
 
-/* Avatar Upload Styling for Register Form */
 .register-form .avatar-upload-group {
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
@@ -791,25 +768,6 @@ button {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.2);
 }
-
-/* Enhanced Responsive Design for wider form */
-@media (max-width: 768px) {
-  .register-form {
-    max-width: 90%;
-    padding: 20px;
-    margin: var(--spacing-lg) auto;
-  }
-
-  .register-flex {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .register-title {
-    font-size: 24px;
-  }
-}
-
 
 /* ============================================= */
 /* === Tables === */
@@ -886,16 +844,16 @@ button {
   margin-right: var(--spacing-sm);
   color: var(--white);
 }
+
 .favicon-icon {
   width: 30px;
   height: 30px;
   object-fit: contain;
   margin-top: -5px;
   margin-bottom: -5px;
-
   background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
-    border-radius: 50px;
-    padding: 2px;
+  border-radius: 50px;
+  padding: 2px;
 }
 
 /* ============================================= */
@@ -912,13 +870,11 @@ button {
   overflow: hidden;
 }
 
-/* Remove animated background from .landing to avoid duplication */
 .landing::before,
 .landing::after {
   content: none;
 }
 
-/* Landing Inner content box */
 .landing-inner {
   position: relative;
   z-index: 2;
@@ -948,7 +904,6 @@ button {
   }
 }
 
-/* Enhanced landing content styling */
 .landing-inner h1 {
   font-size: 3.5rem;
   font-weight: 700;
@@ -999,7 +954,6 @@ button {
   box-shadow: 0 15px 30px rgba(23, 162, 184, 0.4);
 }
 
-/* Add decorative elements */
 .landing-decorative {
   position: absolute;
   width: 100px;
@@ -1063,27 +1017,17 @@ button {
   color: var(--white);
 }
 
-/* --- STYLES FOR SKILLS LIST --- */
 .profile ul li {
   background: var(--dark-color);
-  /* Dark background for skill items */
   color: var(--white);
-  /* White text on dark background */
   padding: 0.25rem 0.5rem;
-  /* Padding for better appearance */
   margin: 0.25rem;
-  /* Space between skill items */
   border-radius: var(--border-radius);
-  /* Rounded corners */
   display: inline-block;
-  /* Makes skills display horizontally */
   font-size: var(--font-size-sm);
-  /* Smaller font size */
   font-weight: 500;
-  /* Medium font weight */
 }
 
-/* Alternative: If you want the entire skills container to have dark background */
 .profile ul.skills {
   background: var(--dark-color);
   padding: var(--spacing-sm);
@@ -1091,7 +1035,6 @@ button {
   margin: var(--spacing-sm) 0;
 }
 
-/* --- STYLES FOR CIRCULAR AVATARS --- */
 .profile img {
   width: 200px;
   height: 200px;
@@ -1104,14 +1047,6 @@ button {
 .profile img:hover {
   border-color: var(--primary-color);
   transform: scale(1.05);
-}
-
-/* Alternative: If you want different sizes for different screen sizes */
-@media (max-width: 768px) {
-  .profile img {
-    width: 60px;
-    height: 60px;
-  }
 }
 
 /* ============================================= */
@@ -1151,7 +1086,6 @@ button {
   animation: fadeInUp 0.8s ease-out;
 }
 
-/* Add subtle animated background */
 .profile-top::before {
   content: '';
   position: absolute;
@@ -1182,15 +1116,12 @@ button {
   box-shadow: 0 25px 50px rgba(23, 162, 184, 0.3);
 }
 
-/* --- UPDATED USERNAME STYLING (NO FADE EFFECT) --- */
 .profile-top h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: var(--spacing-sm);
   color: var(--white);
-  /* Solid white color instead of gradient */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  /* Added subtle text shadow for better visibility */
 }
 
 .profile-top p {
@@ -1241,7 +1172,6 @@ button {
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
-/* --- UPDATED SECTION TITLE COLOR --- */
 .profile-about h2 {
   color: #6c757d;
   font-size: 1.8rem;
@@ -1290,13 +1220,9 @@ button {
 
 .profile-exp,
 .profile-edu {
-  /* Ensure equal dimensions with scrollable content */
   min-height: 400px;
   max-height: 400px;
-  /* Fixed height to enable scrolling */
   width: 100%;
-
-  /* Maintain existing styling but add scrolling */
   padding: var(--spacing-xl);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
   backdrop-filter: blur(12px);
@@ -1306,27 +1232,17 @@ button {
   color: var(--white);
   transition: all 0.3s ease;
   position: relative;
-
-  /* Scrollable properties */
   overflow-y: auto;
-  /* Enable vertical scrolling */
   overflow-x: hidden;
-  /* Prevent horizontal scrolling */
-
-  /* Ensure consistent box model */
   box-sizing: border-box;
-
-  /* Content layout */
   display: flex;
   flex-direction: column;
 }
 
-/* Custom scrollbar styling for glassmorphism theme */
 .profile-exp::-webkit-scrollbar,
 .profile-edu::-webkit-scrollbar {
   width: 6px;
   height: fit-content;
-  /* Explicitly set scrollbar height */
 }
 
 .profile-exp::-webkit-scrollbar-track,
@@ -1334,7 +1250,6 @@ button {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   margin: 2px 0;
-  /* Add margin to prevent overflow */
 }
 
 .profile-exp::-webkit-scrollbar-thumb,
@@ -1343,9 +1258,7 @@ button {
   border-radius: 3px;
   transition: all 0.3s ease;
   margin: 2px 0;
-  /* Add margin to keep within bounds */
   min-height: 20px;
-  /* Set minimum thumb height */
 }
 
 .profile-exp::-webkit-scrollbar-thumb:hover,
@@ -1353,12 +1266,11 @@ button {
   background: linear-gradient(45deg, var(--primary-dark), #0f7a8c);
 }
 
-/* Alternative: Corner styling to prevent overflow */
 .profile-exp::-webkit-scrollbar-corner,
 .profile-edu::-webkit-scrollbar-corner {
   background: transparent;
 }
-/* Ensure content flows properly within scrollable container */
+
 .profile-exp>div,
 .profile-edu>div {
   margin-bottom: var(--spacing-lg);
@@ -1368,10 +1280,8 @@ button {
   border-left: 4px solid var(--primary-color);
   transition: all 0.3s ease;
   flex-shrink: 0;
-  /* Prevent items from shrinking */
 }
 
-/* Maintain hover effects */
 .profile-exp:hover,
 .profile-edu:hover {
   transform: translateY(-5px);
@@ -1388,13 +1298,6 @@ button {
   animation: fadeInRight 0.8s ease-out 0.4s both;
 }
 
-.profile-exp:hover,
-.profile-edu:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* --- UPDATED SECTION TITLE COLORS --- */
 .profile-exp h2,
 .profile-edu h2 {
   margin-bottom: var(--spacing-lg);
@@ -1415,16 +1318,6 @@ button {
   height: 3px;
   background: linear-gradient(45deg, #6c757d, #5a6268);
   border-radius: 2px;
-}
-
-.profile-exp>div,
-.profile-edu>div {
-  margin-bottom: var(--spacing-lg);
-  padding: var(--spacing-md);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  border-left: 4px solid var(--primary-color);
-  transition: all 0.3s ease;
 }
 
 .profile-exp>div:hover,
@@ -1473,7 +1366,6 @@ button {
   animation: fadeInUp 0.8s ease-out 0.6s both;
 }
 
-/* --- UPDATED SECTION TITLE COLOR --- */
 .profile-github h2 {
   color: #6c757d;
   font-size: 1.6rem;
@@ -1550,19 +1442,6 @@ button {
   font-size: 0.9rem;
 }
 
-/* Enhanced Animations */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fadeInLeft {
   0% {
     opacity: 0;
@@ -1584,60 +1463,6 @@ button {
   100% {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Enhanced Responsive Design */
-@media (max-width: 768px) {
-  .profile-grid {
-    grid-template-areas:
-      'top'
-      'about'
-      'exp'
-      'edu'
-      'github';
-    padding: var(--spacing-md);
-  }
-
-  .profile-top img {
-    width: 150px;
-    height: 150px;
-  }
-
-  .profile-top h1 {
-    font-size: 2rem;
-  }
-
-  .profile-top .icons a {
-    width: 40px;
-    height: 40px;
-    font-size: 1.4rem;
-  }
-
-  /* Register Form Responsive */
-  .register-form {
-    max-width: 90%;
-    padding: 20px;
-    margin: var(--spacing-lg) auto;
-  }
-
-  .register-flex {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .register-title {
-    font-size: 24px;
   }
 }
 
@@ -1700,30 +1525,25 @@ button {
 }
 
 /* ============================================= */
-/* === Dashboard Spacing Enhancement === */
+/* === Dashboard Spacing & Layout === */
 /* ============================================= */
 
-/* Multiple targeted selectors for dashboard spacing */
 .bg-white:last-of-type {
   margin-bottom: var(--spacing-xxl) !important;
 }
 
-/* Target education table specifically */
 .table {
   margin-bottom: var(--spacing-xxl);
 }
 
-/* Target containers with tables */
 .bg-white:has(.table) {
   margin-bottom: var(--spacing-xxl);
 }
 
-/* Alternative: Target specific dashboard sections */
 .dashboard>div:nth-last-child(2) {
   margin-bottom: var(--spacing-xxl);
 }
 
-/* Generic section spacing for dashboard */
 .dashboard .bg-white {
   margin-bottom: var(--spacing-lg);
 }
@@ -1732,8 +1552,324 @@ button {
   margin-top: var(--spacing-xxl);
 }
 
+.dash-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.dash-buttons .btn {
+  padding: 0.75rem 1.5rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--white);
+}
+
+.dash-buttons .btn:hover {
+  background: var(--primary-dark);
+}
+
+.avatar-small {
+  width: 150px;
+  height: 150px;
+  border-radius: 25%;
+  object-fit: cover;
+  border: 2px solid var(--white);
+  margin-left: 150px;
+}
+
 /* ============================================= */
-/* === Responsive Design === */
+/* === Toggle Switch Styles === */
+/* ============================================= */
+
+.toggle-switch {
+  position: relative;
+  width: 100px;
+  height: 50px;
+  --light: #d8dbe0;
+  --dark: #28292c;
+  --link: rgb(27, 129, 112);
+  --link-hover: rgb(24, 94, 82);
+}
+
+.switch-label {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background-color: var(--dark);
+  border-radius: 25px;
+  cursor: pointer;
+  border: 3px solid var(--dark);
+}
+
+.checkbox {
+  position: absolute;
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  transition: 0.3s;
+}
+
+.checkbox:checked~.slider {
+  background-color: var(--light);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  box-shadow: inset 12px -4px 0px 0px var(--light);
+  background-color: var(--dark);
+  transition: 0.3s;
+}
+
+.checkbox:checked~.slider::before {
+  transform: translateX(50px);
+  background-color: var(--dark);
+  box-shadow: none;
+}
+
+/* ============================================= */
+/* === Avatar Upload Component Styles === */
+/* ============================================= */
+
+.avatar-upload-group {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  max-width: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--border-radius);
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+}
+
+.avatar-upload-group:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.2);
+}
+
+.avatar-upload-group>i {
+  padding: 0.75rem;
+  width: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.avatar-upload-group .file-input-hidden {
+  display: none;
+}
+
+.avatar-upload-group .file-label {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0.75rem var(--spacing-md);
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.avatar-upload-group .file-label:hover {
+  color: var(--white);
+}
+
+.avatar-upload-group .btn {
+  margin: 0;
+  box-shadow: none;
+  background: var(--primary-color);
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* ============================================= */
+/* === Snackbar Notifications (Top Position) === */
+/* ============================================= */
+.snackbar-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  max-width: 500px;
+  width: auto;
+  min-width: 200px;
+}
+
+.snackbar {
+  margin-bottom: var(--spacing-sm);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  min-height: 70px;
+  transition: all 0.3s ease;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.snackbar-enter {
+  animation: snackbarSlideDown 0.4s ease-out forwards;
+}
+
+@keyframes snackbarSlideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.snackbar-exit {
+  animation: snackbarSlideUp 0.3s ease-in forwards;
+}
+
+@keyframes snackbarSlideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.snackbar-success {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(40, 167, 69, 0.7));
+  border-left: 4px solid #28a745;
+}
+
+.snackbar-danger {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.9), rgba(220, 53, 69, 0.7));
+  border-left: 4px solid #dc3545;
+}
+
+.snackbar-warning {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 193, 7, 0.7));
+  border-left: 4px solid #ffc107;
+  color: var(--dark-color);
+}
+
+.snackbar-info {
+  background: linear-gradient(135deg, rgba(23, 162, 184, 0.9), rgba(23, 162, 184, 0.7));
+  border-left: 4px solid var(--primary-color);
+}
+
+.snackbar-content {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--white);
+}
+
+.snackbar-warning .snackbar-content {
+  color: var(--dark-color);
+}
+
+.snackbar-icon {
+  margin-right: var(--spacing-md);
+  font-size: 1.2rem;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snackbar-message {
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.snackbar-close {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  margin-left: var(--spacing-sm);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snackbar-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.snackbar-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.snackbar-progress-bar {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  animation: progressDecrease 5s linear forwards;
+}
+
+@keyframes progressDecrease {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}
+
+.snackbar:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.snackbar:hover .snackbar-progress-bar {
+  animation-play-state: paused;
+}
+
+
+/* ============================================= */
+/* === Responsive Design (Consolidated) === */
 /* ============================================= */
 
 @media (max-width: 768px) {
@@ -1802,6 +1938,17 @@ button {
       'edu'
       'github';
     grid-gap: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+
+  .profile-top h1 {
+    font-size: 2rem;
+  }
+
+  .profile-top .icons a {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
   }
 
   .profile-about .skills {
@@ -1809,10 +1956,32 @@ button {
     gap: var(--spacing-xs);
   }
 
-  .dash-buttons a {
+  /* === Dashboard Mobile Fix === */
+  .dash-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  .dash-buttons .btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 0;
+    height: auto;
+  }
+
+  .avatar-small {
+    margin-left: 0;
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Make tables scrollable on mobile */
+  .table {
     display: block;
     width: 100%;
-    margin-bottom: var(--spacing-xs);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .post {
@@ -1834,359 +2003,26 @@ button {
   .profile-github .repo>div:last-child {
     margin-top: var(--spacing-sm);
   }
-}
 
-/* ============================================= */
-/* === Toggle Switch Styles === */
-/* ============================================= */
-
-.toggle-switch {
-  position: relative;
-  width: 100px;
-  height: 50px;
-  --light: #d8dbe0;
-  --dark: #28292c;
-  --link: rgb(27, 129, 112);
-  --link-hover: rgb(24, 94, 82);
-}
-
-.switch-label {
-  position: absolute;
-  width: 100%;
-  height: 50px;
-  background-color: var(--dark);
-  border-radius: 25px;
-  cursor: pointer;
-  border: 3px solid var(--dark);
-}
-
-.checkbox {
-  position: absolute;
-  display: none;
-}
-
-.slider {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 25px;
-  transition: 0.3s;
-}
-
-.checkbox:checked~.slider {
-  background-color: var(--light);
-}
-
-.slider::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  box-shadow: inset 12px -4px 0px 0px var(--light);
-  background-color: var(--dark);
-  transition: 0.3s;
-}
-
-.checkbox:checked~.slider::before {
-  transform: translateX(50px);
-  background-color: var(--dark);
-  box-shadow: none;
-}
-
-/* client/src/App.css */
-
-/* ============================================= */
-/* === Avatar Upload Component Styles === */
-/* ============================================= */
-
-.avatar-upload-group {
-  display: flex;
-  align-items: stretch;
-  /* Makes all items in the group have the same height */
-  position: relative;
-  max-width: 420px;
-  /* The border and background are on the container for a unified look */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: var(--border-radius);
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: var(--transition);
-}
-
-/* Add a focus ring to the whole component when a child is focused */
-.avatar-upload-group:focus-within {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.2);
-}
-
-/* Icon on the left */
-.avatar-upload-group>i {
-  padding: 0.75rem;
-  width: 3.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-  font-size: 1.2rem;
-  /* Visual separator for the icon */
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* Hide the actual file input element */
-.avatar-upload-group .file-input-hidden {
-  display: none;
-}
-
-/* The label acts as the visible part of the file input */
-.avatar-upload-group .file-label {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  /* Allows the label to take up the remaining space */
-  padding: 0.75rem var(--spacing-md);
-  font-size: var(--font-size-base);
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  transition: var(--transition);
-
-  /* Handle long filenames gracefully */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.avatar-upload-group .file-label:hover {
-  color: var(--white);
-}
-
-/* The Upload button on the far right */
-.avatar-upload-group .btn {
-  /* Reset button styles to fit perfectly inside the container */
-  margin: 0;
-  box-shadow: none;
-  background: var(--primary-color);
-  border: none;
-  /* Add a visual separator line */
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  /* Ensure only the right corners are rounded */
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-}
-
-/*------------------------------------------------*/
-/* In your main CSS file */
-
-.dash-buttons {
-  display: flex;
-  align-items: center;
-  /* This ensures all items are vertically aligned */
-  gap: var(--spacing-md);
-}
-
-.avatar-small {
-  width: 150px;
-  /* Larger size */
-  height: 150px;
-  /* Larger size */
-  border-radius: 25%;
-  object-fit: cover;
-  border: 2px solid var(--white);
-  margin-left: 150px;
-  /* Pushes the element to the far right */
-}
-
-/* Also, update the button height to match the new avatar size for better alignment */
-.dash-buttons .btn {
-  padding: 0.75rem 1.5rem;
-  height: 70px;
-  /* Match the new avatar height */
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  color: var(--white);
-}
-
-.dash-buttons .btn:hover {
-  background: var(--primary-dark);
-}
-
-/* ============================================= */
-/* === Snackbar Notifications (Top Position) === */
-/* ============================================= */
-
-.snackbar-container {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  max-width: 500px;
-  width: auto;
-  min-width: 200px;
-}
-.snackbar {
-  margin-bottom: var(--spacing-sm);
-  border-radius: 16px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  position: relative;
-  min-height: 70px;
-  transition: all 0.3s ease;
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-/* Entry animation - slide down from top */
-.snackbar-enter {
-  animation: snackbarSlideDown 0.4s ease-out forwards;
-}
-
-@keyframes snackbarSlideDown {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
+  /* Register Form Responsive */
+  .register-form {
+    max-width: 90%;
+    padding: 20px;
+    margin: var(--spacing-lg) auto;
   }
 
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Exit animation - slide up to top */
-.snackbar-exit {
-  animation: snackbarSlideUp 0.3s ease-in forwards;
-}
-
-@keyframes snackbarSlideUp {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
+  .register-flex {
+    flex-direction: column;
+    gap: 0;
   }
 
-  100% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-}
-
-/* Rest of your snackbar styles remain the same... */
-.snackbar-success {
-  background: linear-gradient(135deg, rgba(40, 167, 69, 0.9), rgba(40, 167, 69, 0.7));
-  border-left: 4px solid #28a745;
-}
-
-.snackbar-danger {
-  background: linear-gradient(135deg, rgba(220, 53, 69, 0.9), rgba(220, 53, 69, 0.7));
-  border-left: 4px solid #dc3545;
-}
-
-.snackbar-warning {
-  background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 193, 7, 0.7));
-  border-left: 4px solid #ffc107;
-  color: var(--dark-color);
-}
-
-.snackbar-info {
-  background: linear-gradient(135deg, rgba(23, 162, 184, 0.9), rgba(23, 162, 184, 0.7));
-  border-left: 4px solid var(--primary-color);
-}
-
-/* Snackbar content */
-.snackbar-content {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-md) var(--spacing-lg);
-  color: var(--white);
-}
-
-.snackbar-warning .snackbar-content {
-  color: var(--dark-color);
-}
-
-.snackbar-icon {
-  margin-right: var(--spacing-md);
-  font-size: 1.2rem;
-  min-width: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.snackbar-message {
-  flex: 1;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.snackbar-close {
-  background: none;
-  border: none;
-  color: inherit;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  margin-left: var(--spacing-sm);
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.snackbar-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-}
-
-/* Progress bar */
-.snackbar-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.2);
-  overflow: hidden;
-}
-
-.snackbar-progress-bar {
-  height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  width: 100%;
-  animation: progressDecrease 5s linear forwards;
-}
-
-@keyframes progressDecrease {
-  0% {
-    width: 100%;
+  .register-title {
+    font-size: 24px;
   }
 
-  100% {
-    width: 0%;
-  }
-}
-
-/* Hover effects */
-.snackbar:hover {
-  transform: scale(1.02);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-.snackbar:hover .snackbar-progress-bar {
-  animation-play-state: paused;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
+  /* Snackbar Mobile */
   .snackbar-container {
     top: 70px;
-    /* Reduced for mobile navbar */
     right: 10px;
     left: 10px;
     max-width: none;
