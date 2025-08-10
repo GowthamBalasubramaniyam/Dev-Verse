@@ -41,7 +41,6 @@ router.get('/', Authentication, async (req, res) => {
           .populate("user", ["name", "avatar"]) // Populate user data including avatar
           .sort({ date: -1 });
         res.json(posts);
-        res.json(posts);
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');
