@@ -15,6 +15,7 @@ import { setAlert } from "./alert";
 export const getPosts = () => async (dispatch) => {
   try {
     const res = await API.get("/api/posts");
+    console.log("GET_POSTS payload:", res.data);
     dispatch({
       type: GET_POSTS,
       payload: res.data,
