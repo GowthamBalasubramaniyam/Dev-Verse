@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "../api"; // adjust path based on your folder structure
 import { setAlert } from "./alert";
 import {
   ACCOUNT_DELETED,
@@ -16,7 +16,7 @@ import {
 // Get current user's profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/profile/me");
+    const res = await API.get("/api/profile/me");
 
     dispatch({
       type: GET_PROFILE,
@@ -35,7 +35,7 @@ export const getCurrentProfile = () => async (dispatch) => {
 export const getProfiles = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE }); // Clear current profile before fetching all profiles
   try {
-    const res = await axios.get("/api/profile");
+    const res = await API.get("/api/profile");
 
     dispatch({
       type: GET_PROFILES,
@@ -51,10 +51,9 @@ export const getProfiles = () => async (dispatch) => {
 };
 
 // Get profile by user ID
-export const getProfileById = userId => async (dispatch) => {
-  
+export const getProfileById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/profile/user/${userId}`);
+    const res = await API.get(`/api/profile/user/${userId}`);
     console.log(
       `Action: getProfileById(${userId}) - API Response Data (before dispatch):`,
       res.data
@@ -79,28 +78,29 @@ export const getProfileById = userId => async (dispatch) => {
 // Get GitHub repos of a user
 export const getGithubRepos = (username) => async (dispatch) => {
   try {
-    if (!username || typeof username !== 'string' || username.trim() === '') {
-      console.log('No valid GitHub username provided, dispatching empty repos.');
+    if (!username || typeof username !== "string" || username.trim() === "") {
+      console.log(
+        "No valid GitHub username provided, dispatching empty repos."
+      );
       dispatch({
         type: GET_REPOS,
-        payload: [], 
+        payload: [],
       });
-      return; 
+      return;
     }
 
-    const res = await axios.get(`/api/profile/github/${username}`);
+    const res = await API.get(`/api/profile/github/${username}`);
 
     dispatch({
       type: GET_REPOS,
       payload: res.data,
     });
   } catch (err) {
-   
     dispatch({
       type: GET_REPOS,
-      payload: [], 
+      payload: [],
     });
-    console.error('Error fetching GitHub repos:', err);
+    console.error("Error fetching GitHub repos:", err);
   }
 };
 
@@ -115,7 +115,7 @@ export const createProfile =
         },
       };
 
-      const res = await axios.post("/api/profile", formData, config);
+      const res = await API.post("/api/profile", formData, config);
 
       dispatch({
         type: GET_PROFILE,
@@ -154,7 +154,7 @@ export const addExperience = (formData, navigate) => async (dispatch) => {
       },
     };
 
-    const res = await axios.put("/api/profile/experience", formData, config);
+    const res = await API.put("/api/profile/experience", formData, config);
 
     dispatch({
       type: UPDATE_PROFILE,
@@ -188,7 +188,7 @@ export const addEducation = (formData, navigate) => async (dispatch) => {
       },
     };
 
-    const res = await axios.put("/api/profile/education", formData, config);
+    const res = await API.put("/api/profile/education", formData, config);
 
     dispatch({
       type: UPDATE_PROFILE,
@@ -217,7 +217,7 @@ export const addEducation = (formData, navigate) => async (dispatch) => {
 export const deleteExperience = (id) => async (dispatch) => {
   if (window.confirm("Are you sure? This action cannot be undone.")) {
     try {
-      const res = await axios.delete(`/api/profile/experience/${id}`);
+      const res = await API.delete(`/api/profile/experience/${id}`);
 
       dispatch({
         type: UPDATE_PROFILE,
@@ -240,7 +240,7 @@ export const deleteExperience = (id) => async (dispatch) => {
 export const deleteEducation = (id) => async (dispatch) => {
   if (window.confirm("Are you sure? This action cannot be undone.")) {
     try {
-      const res = await axios.delete(`/api/profile/education/${id}`);
+      const res = await API.delete(`/api/profile/education/${id}`);
 
       dispatch({
         type: UPDATE_PROFILE,
@@ -264,10 +264,10 @@ export const deleteEducation = (id) => async (dispatch) => {
 export const deleteAccount = () => async (dispatch) => {
   if (window.confirm("Are you sure? This action cannot be undone.")) {
     try {
-      await axios.delete("/api/profile");
+      await API.delete("/api/profile");
 
-      dispatch({type: CLEAR_PROFILE,});
-      dispatch({type: ACCOUNT_DELETED,});
+      dispatch({ type: CLEAR_PROFILE });
+      dispatch({ type: ACCOUNT_DELETED });
       dispatch(setAlert("Your account has been permanently deleted"));
     } catch (err) {
       dispatch({
@@ -286,18 +286,18 @@ export const uploadAvatar = (formData) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        "Content-Type": "multipart/form-data",
+      },
     };
 
-    const res = await axios.post('/api/profile/avatar', formData, config);
-    
-    console.log('🚀 Avatar upload response:', res.data); // Debug log
+    const res = await API.post("/api/profile/avatar", formData, config);
+
+    console.log("🚀 Avatar upload response:", res.data); // Debug log
 
     // Update profile/user avatar
     dispatch({
       type: AVATAR_UPDATE_SUCCESS, // Make sure this exists in your types.js
-      payload: res.data.avatar // Just the avatar URL
+      payload: res.data.avatar, // Just the avatar URL
     });
 
     // Update avatar in all posts by this user
@@ -312,32 +312,30 @@ export const uploadAvatar = (formData) => async (dispatch) => {
       dispatch(updateAuthAvatar(res.data.avatar));
     }
 
-    dispatch(setAlert('Avatar Updated Successfully', 'success'));
-    
+    dispatch(setAlert("Avatar Updated Successfully", "success"));
   } catch (err) {
-    console.error('❌ Avatar upload error:', err.response?.data); // Debug log
-    
+    console.error("❌ Avatar upload error:", err.response?.data); // Debug log
+
     const errors = err.response?.data?.errors;
     const errorMsg = err.response?.data?.msg;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     } else if (errorMsg) {
-      dispatch(setAlert(errorMsg, 'danger'));
+      dispatch(setAlert(errorMsg, "danger"));
     } else {
-      dispatch(setAlert('Avatar upload failed', 'danger'));
+      dispatch(setAlert("Avatar upload failed", "danger"));
     }
 
     dispatch({
       type: PROFILE_ERROR,
-      payload: { 
-        msg: err.response?.statusText || 'Upload failed', 
-        status: err.response?.status || 500
-      }
+      payload: {
+        msg: err.response?.statusText || "Upload failed",
+        status: err.response?.status || 500,
+      },
     });
   }
 };
-
 
 export const updateUserAvatarInPosts = (userId, newAvatar) => (dispatch) => {
   dispatch({

@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "../api"; // adjust path based on your folder structure
 import {
   GET_POSTS,
   POST_ERROR,
@@ -14,7 +14,7 @@ import { setAlert } from "./alert";
 // Action to get all posts
 export const getPosts = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/posts");
+    const res = await API.get("/api/posts");
     dispatch({
       type: GET_POSTS,
       payload: res.data,
@@ -30,7 +30,7 @@ export const getPosts = () => async (dispatch) => {
 // Action to update likes on a post
 export const addLike = (id) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/like/${id}`);
+    const res = await API.put(`/api/posts/like/${id}`);
     dispatch({
       type: UPDATE_LIKES,
       payload: { id, likes: res.data },
@@ -47,7 +47,7 @@ export const addLike = (id) => async (dispatch) => {
 // Action to remove likes from a post
 export const removeLike = (id) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/unlike/${id}`);
+    const res = await API.put(`/api/posts/unlike/${id}`);
     dispatch({
       type: UPDATE_LIKES,
       payload: { id, likes: res.data },
@@ -65,7 +65,7 @@ export const removeLike = (id) => async (dispatch) => {
 export const deletePost = (id) => async (dispatch) => {
   if (window.confirm("Are you sure? This action cannot be undone.")) {
     try {
-      await axios.delete(`/api/posts/${id}`);
+      await API.delete(`/api/posts/${id}`);
       dispatch({
         type: DELETE_POST,
         payload: id,
@@ -89,7 +89,7 @@ export const addPost = (formData) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post("/api/posts", formData, config);
+    const res = await API.post("/api/posts", formData, config);
     dispatch({
       type: ADD_POST,
       payload: res.data,
@@ -107,7 +107,7 @@ export const addPost = (formData) => async (dispatch) => {
 // Action to get a single post by ID
 export const getPost = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/posts/${id}`);
+    const res = await API.get(`/api/posts/${id}`);
     dispatch({
       type: GET_POST,
       payload: res.data,
@@ -128,7 +128,11 @@ export const addComment = (postId, formData) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post(`/api/posts/comment/${postId}`, formData, config);
+    const res = await API.post(
+      `/api/posts/comment/${postId}`,
+      formData,
+      config
+    );
     dispatch({
       type: ADD_COMMENT,
       payload: res.data,
@@ -145,20 +149,20 @@ export const addComment = (postId, formData) => async (dispatch) => {
 
 // Action to remove a comment from a post
 export const deleteComment = (postId, commentId) => async (dispatch) => {
- if (window.confirm("Are you sure? This action cannot be undone.")) {
-   try {
-     await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
-     dispatch({
-       type: REMOVE_COMMENT,
-       payload: commentId,
-     });
-     dispatch(setAlert("Comment Deleted", "success"));
-     dispatch(getPosts()); // Refresh posts after adding a new one
-   } catch (err) {
-     dispatch({
-       type: POST_ERROR,
-       payload: { msg: err.response.statusText, status: err.response.status },
-     });
-   }
- }
+  if (window.confirm("Are you sure? This action cannot be undone.")) {
+    try {
+      await API.delete(`/api/posts/comment/${postId}/${commentId}`);
+      dispatch({
+        type: REMOVE_COMMENT,
+        payload: commentId,
+      });
+      dispatch(setAlert("Comment Deleted", "success"));
+      dispatch(getPosts()); // Refresh posts after adding a new one
+    } catch (err) {
+      dispatch({
+        type: POST_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  }
 };
