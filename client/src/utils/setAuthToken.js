@@ -1,13 +1,11 @@
-import axios from 'axios';
+import API from "../api";
 
-const setAuthToken = token => {
-    if (token) {
-        // Apply to every request
-        axios.defaults.headers.common['x-auth-token'] = token;
-    } else {
-        // Delete auth header
-        delete axios.defaults.headers.common['x-auth-token'];
-    }
-}
+const setAuthToken = (token) => {
+  if (token) {
+    API.defaults.headers.common["x-auth-token"] = token;
+  } else {
+    delete API.defaults.headers.common["x-auth-token"];
+  }
+};
 
 export default setAuthToken;
