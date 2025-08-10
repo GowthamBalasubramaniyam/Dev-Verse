@@ -810,6 +810,7 @@ button {
   }
 }
 
+
 /* ============================================= */
 /* === Tables === */
 /* ============================================= */
@@ -885,7 +886,6 @@ button {
   margin-right: var(--spacing-sm);
   color: var(--white);
 }
-
 .favicon-icon {
   width: 30px;
   height: 30px;
@@ -894,8 +894,8 @@ button {
   margin-bottom: -5px;
 
   background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
-  border-radius: 50px;
-  padding: 2px;
+    border-radius: 50px;
+    padding: 2px;
 }
 
 /* ============================================= */
@@ -1358,7 +1358,6 @@ button {
 .profile-edu::-webkit-scrollbar-corner {
   background: transparent;
 }
-
 /* Ensure content flows properly within scrollable container */
 .profile-exp>div,
 .profile-edu>div {
@@ -1598,6 +1597,50 @@ button {
   }
 }
 
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-areas:
+      'top'
+      'about'
+      'exp'
+      'edu'
+      'github';
+    padding: var(--spacing-md);
+  }
+
+  .profile-top img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile-top h1 {
+    font-size: 2rem;
+  }
+
+  .profile-top .icons a {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+
+  /* Register Form Responsive */
+  .register-form {
+    max-width: 90%;
+    padding: 20px;
+    margin: var(--spacing-lg) auto;
+  }
+
+  .register-flex {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .register-title {
+    font-size: 24px;
+  }
+}
+
 /* ============================================= */
 /* === Posts Page === */
 /* ============================================= */
@@ -1657,321 +1700,87 @@ button {
 }
 
 /* ============================================= */
-/* === ENHANCED DASHBOARD STYLES === */
+/* === Dashboard Spacing Enhancement === */
 /* ============================================= */
 
-/* Dashboard Container */
-.dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-xl);
+/* Multiple targeted selectors for dashboard spacing */
+.bg-white:last-of-type {
+  margin-bottom: var(--spacing-xxl) !important;
 }
 
-/* Dashboard Header */
-.dashboard h1 {
-  color: var(--white);
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: var(--spacing-lg);
-  text-align: center;
-}
-
-.dashboard .lead {
-  text-align: center;
-  margin-bottom: var(--spacing-xl);
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-/* Dashboard Actions - Desktop */
-.dash-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-md);
+/* Target education table specifically */
+.table {
   margin-bottom: var(--spacing-xxl);
-  padding: var(--spacing-lg);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.dash-buttons .btn-group {
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
+/* Target containers with tables */
+.bg-white:has(.table) {
+  margin-bottom: var(--spacing-xxl);
 }
 
-.dash-buttons .btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 25px;
-  background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
-  color: var(--white);
-  border: none;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  min-width: 140px;
-  justify-content: center;
+/* Alternative: Target specific dashboard sections */
+.dashboard>div:nth-last-child(2) {
+  margin-bottom: var(--spacing-xxl);
 }
 
-.dash-buttons .btn:hover {
-  background: linear-gradient(45deg, var(--primary-dark), #0f7a8c);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(23, 162, 184, 0.4);
-}
-
-.dash-buttons .btn i {
-  margin-right: var(--spacing-xs);
-}
-
-/* Avatar styling in dashboard */
-.avatar-small {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(255, 255, 255, 0.8);
-  transition: all 0.3s ease;
-  margin-left: auto;
-}
-
-.avatar-small:hover {
-  transform: scale(1.05);
-  border-color: var(--primary-color);
-  box-shadow: 0 10px 25px rgba(23, 162, 184, 0.3);
-}
-
-/* Dashboard Sections */
+/* Generic section spacing for dashboard */
 .dashboard .bg-white {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08)) !important;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: var(--spacing-xl);
-  margin-bottom: var(--spacing-xl);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  color: var(--white);
-}
-
-.dashboard .bg-white:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.dashboard .bg-white h2 {
-  color: #6c757d;
-  font-size: 1.8rem;
-  font-weight: 700;
   margin-bottom: var(--spacing-lg);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 2px solid rgba(108, 117, 125, 0.3);
 }
 
-/* Table styling in dashboard */
-.dashboard .table {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.dashboard .table th {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--white);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.85rem;
-  padding: var(--spacing-md) var(--spacing-lg);
-}
-
-.dashboard .table td {
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.dashboard .table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Experience and Education items */
-.dashboard .bg-white>div {
-  background: rgba(255, 255, 255, 0.05);
-  padding: var(--spacing-lg);
-  border-radius: 12px;
-  margin-bottom: var(--spacing-md);
-  border-left: 4px solid var(--primary-color);
-  transition: all 0.3s ease;
-}
-
-.dashboard .bg-white>div:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(5px);
-}
-
-.dashboard .bg-white>div:last-child {
-  margin-bottom: 0;
-}
-
-/* Danger Zone */
 .dashboard .bg-white:last-child {
-  border-left: 4px solid var(--danger-color);
-  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05)) !important;
+  margin-top: var(--spacing-xxl);
 }
 
 /* ============================================= */
-/* === ENHANCED MOBILE RESPONSIVE DESIGN === */
+/* === Responsive Design === */
 /* ============================================= */
 
 @media (max-width: 768px) {
-
-  /* Container adjustments */
   .container {
-    margin-top: 5rem;
+    margin-top: 8rem;
     padding: 0 var(--spacing-md);
   }
 
-  .dashboard {
-    padding: var(--spacing-md);
-  }
-
-  /* Hide elements on small screens */
   .hide-sm {
     display: none;
   }
 
-  /* Typography scaling */
   .x-large {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .large {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 
   .lead {
     font-size: var(--font-size-base);
   }
 
-  .dashboard h1 {
-    font-size: 2rem;
-    margin-bottom: var(--spacing-md);
-  }
-
-  /* Enhanced Mobile Navbar */
   .navbar {
     flex-direction: column;
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-md);
     align-items: stretch;
-    min-height: 80px;
   }
 
   .navbar ul {
     justify-content: center;
     margin-top: var(--spacing-sm);
-    flex-wrap: wrap;
   }
 
   .navbar h1 {
-    margin-bottom: var(--spacing-sm);
-    text-align: center;
+    margin-bottom: var(--spacing-md);
   }
 
   .navbar .welcome {
     display: none;
   }
 
-  .navbar a {
-    padding: 0.4rem 0.6rem;
-    margin: 0.1rem;
-    font-size: 0.9rem;
-  }
-
-  /* CRITICAL: Enhanced Mobile Dashboard Styles */
-  .dash-buttons {
-    flex-direction: column;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
-    align-items: stretch;
-  }
-
-  .dash-buttons .btn-group {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    width: 100%;
-  }
-
-  .dash-buttons .btn {
-    width: 100%;
-    min-width: unset;
-    padding: var(--spacing-md);
-    font-size: 0.9rem;
-    text-align: center;
-    margin: 0;
-    border-radius: 12px;
-  }
-
-  /* Mobile Avatar positioning */
-  .avatar-small {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  /* Mobile Dashboard Sections */
-  .dashboard .bg-white {
-    padding: var(--spacing-lg) var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-    border-radius: 12px;
-  }
-
-  .dashboard .bg-white h2 {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: var(--spacing-md);
-  }
-
-  /* Mobile Table Responsiveness */
-  .dashboard .table {
-    font-size: 0.85rem;
-    border-radius: 8px;
-  }
-
-  .dashboard .table th,
-  .dashboard .table td {
-    padding: var(--spacing-sm);
-  }
-
-  /* Hide table columns on very small screens */
-  .dashboard .table .hide-sm {
-    display: none;
-  }
-
-  /* Make table horizontally scrollable if needed */
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Mobile Experience/Education items */
-  .dashboard .bg-white>div {
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
-    border-radius: 8px;
-  }
-
-  /* Profile pages mobile */
   .profile {
     grid-template-columns: 1fr;
     text-align: center;
     padding: var(--spacing-md);
-    gap: var(--spacing-md);
   }
 
   .profile ul {
@@ -1980,8 +1789,8 @@ button {
 
   .profile-top img,
   .profile img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     margin: auto;
   }
 
@@ -1993,33 +1802,6 @@ button {
       'edu'
       'github';
     grid-gap: var(--spacing-md);
-    padding: var(--spacing-md);
-  }
-
-  .profile-top {
-    padding: var(--spacing-lg);
-  }
-
-  .profile-top h1 {
-    font-size: 1.8rem;
-  }
-
-  .profile-top .icons {
-    gap: var(--spacing-md);
-    justify-content: center;
-  }
-
-  .profile-top .icons a {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-  }
-
-  .profile-about,
-  .profile-exp,
-  .profile-edu,
-  .profile-github {
-    padding: var(--spacing-lg);
   }
 
   .profile-about .skills {
@@ -2027,177 +1809,30 @@ button {
     gap: var(--spacing-xs);
   }
 
-  /* Mobile Posts */
+  .dash-buttons a {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--spacing-xs);
+  }
+
   .post {
     grid-template-columns: 1fr;
     text-align: center;
     padding: var(--spacing-md);
-    gap: var(--spacing-md);
   }
 
   .post a,
   .post button {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.85rem;
-  }
-
-  .post img {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto var(--spacing-sm);
+    padding: 0.5rem 0.75rem;
   }
 
   .profile-github .repo {
     flex-direction: column;
     text-align: center;
-    padding: var(--spacing-md);
   }
 
   .profile-github .repo>div:last-child {
     margin-top: var(--spacing-sm);
-    text-align: center;
-  }
-
-  /* Mobile Forms */
-  .register-form {
-    max-width: 95%;
-    padding: var(--spacing-lg) var(--spacing-md);
-    margin: var(--spacing-md) auto;
-  }
-
-  .register-flex {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .register-title {
-    font-size: 1.5rem;
-    text-align: center;
-    padding-left: 0;
-  }
-
-  .register-title::before,
-  .register-title::after {
-    display: none;
-  }
-
-  /* Mobile Snackbar */
-  .snackbar-container {
-    top: 60px;
-    right: 10px;
-    left: 10px;
-    max-width: none;
-  }
-
-  .snackbar {
-    min-height: 50px;
-  }
-
-  .snackbar-content {
-    padding: var(--spacing-sm);
-  }
-
-  .snackbar-icon {
-    font-size: 1rem;
-    margin-right: var(--spacing-sm);
-  }
-
-  .snackbar-message {
-    font-size: 0.85rem;
-  }
-
-  /* Mobile Avatar Upload */
-  .avatar-upload-group {
-    max-width: 100%;
-    flex-direction: column;
-  }
-
-  .avatar-upload-group>i {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
-  }
-
-  .avatar-upload-group .file-label {
-    border-radius: 0;
-  }
-
-  .avatar-upload-group .btn {
-    border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-  }
-
-  /* Mobile spacing adjustments */
-  .my-2 {
-    margin: var(--spacing-md) 0;
-  }
-
-  .p-2 {
-    padding: var(--spacing-md);
-  }
-
-  /* Mobile button adjustments */
-  .btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-    margin-right: var(--spacing-xs);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  /* Ensure landing page is mobile friendly */
-  .landing-inner {
-    margin-top: 8rem;
-    padding: var(--spacing-xl) var(--spacing-lg);
-    max-width: 95%;
-  }
-
-  .landing-inner h1 {
-    font-size: 2.5rem;
-  }
-
-  .landing-inner .btn {
-    margin: var(--spacing-xs);
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-  }
-}
-
-/* Extra small devices (phones, 576px and down) */
-@media (max-width: 576px) {
-  .dashboard {
-    padding: var(--spacing-sm);
-  }
-
-  .dashboard .bg-white {
-    padding: var(--spacing-md) var(--spacing-sm);
-  }
-
-  .dashboard .table {
-    font-size: 0.8rem;
-  }
-
-  .dashboard .table th,
-  .dashboard .table td {
-    padding: var(--spacing-xs);
-  }
-
-  .dash-buttons .btn {
-    padding: var(--spacing-sm);
-    font-size: 0.85rem;
-  }
-
-  .avatar-small {
-    width: 60px;
-    height: 60px;
-  }
-
-  .navbar {
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  .container {
-    padding: 0 var(--spacing-sm);
   }
 }
 
@@ -2260,6 +1895,8 @@ button {
   background-color: var(--dark);
   box-shadow: none;
 }
+
+/* client/src/App.css */
 
 /* ============================================= */
 /* === Avatar Upload Component Styles === */
@@ -2337,6 +1974,43 @@ button {
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
+/*------------------------------------------------*/
+/* In your main CSS file */
+
+.dash-buttons {
+  display: flex;
+  align-items: center;
+  /* This ensures all items are vertically aligned */
+  gap: var(--spacing-md);
+}
+
+.avatar-small {
+  width: 150px;
+  /* Larger size */
+  height: 150px;
+  /* Larger size */
+  border-radius: 25%;
+  object-fit: cover;
+  border: 2px solid var(--white);
+  margin-left: 150px;
+  /* Pushes the element to the far right */
+}
+
+/* Also, update the button height to match the new avatar size for better alignment */
+.dash-buttons .btn {
+  padding: 0.75rem 1.5rem;
+  height: 70px;
+  /* Match the new avatar height */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--white);
+}
+
+.dash-buttons .btn:hover {
+  background: var(--primary-dark);
+}
+
 /* ============================================= */
 /* === Snackbar Notifications (Top Position) === */
 /* ============================================= */
@@ -2351,7 +2025,6 @@ button {
   width: auto;
   min-width: 200px;
 }
-
 .snackbar {
   margin-bottom: var(--spacing-sm);
   border-radius: 16px;
@@ -2507,4 +2180,32 @@ button {
 
 .snackbar:hover .snackbar-progress-bar {
   animation-play-state: paused;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .snackbar-container {
+    top: 70px;
+    /* Reduced for mobile navbar */
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .snackbar {
+    min-height: 60px;
+  }
+
+  .snackbar-content {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .snackbar-icon {
+    font-size: 1rem;
+    margin-right: var(--spacing-sm);
+  }
+
+  .snackbar-message {
+    font-size: 0.9rem;
+  }
 }
