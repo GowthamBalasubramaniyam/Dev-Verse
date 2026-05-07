@@ -21,31 +21,13 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   };
 
+  // Redirect if logged in
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
 
   return (
     <div className="container">
-      {/* Professional System Note */}
-      <div 
-        style={{ 
-          backgroundColor: '#f8f9fa', 
-          border: '1px solid #e9ecef', 
-          borderRadius: '8px', 
-          padding: '12px', 
-          marginBottom: '20px', 
-          textAlign: 'center',
-          fontSize: '0.85rem',
-          color: '#6c757d',
-          maxWidth: '400px',
-          margin: '0 auto 20px auto'
-        }}
-      >
-        <i className="fas fa-server" style={{ marginRight: '8px', color: '#17a2b8' }}></i>
-        <strong>System Note:</strong> Our cloud instance initializes on demand. Please allow up to 60 seconds for the first request to process.
-      </div>
-
       <form className="register-form" onSubmit={onSubmit}>
         <h1 className="register-title">Welcome Back</h1>
         <p className="register-message">
