@@ -37,6 +37,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       <form className="register-form" onSubmit={onSubmit}>
         <h1 className="register-title">Create Your Account</h1>
         <p className="register-message">
+          Backend services may take up to 30–50 seconds to respond initially due
+          to free-tier cloud cold starts{" "}
+        </p>
+        <p className="register-message">
           Join our developer community and showcase your skills
         </p>
 
