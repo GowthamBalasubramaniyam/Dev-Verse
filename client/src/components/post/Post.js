@@ -23,12 +23,16 @@ const Post = ({getPost, post:{post , loading}, match}) => {
             </Link>
             <div className="post-item">
                 <PostItem post={post} showActions={false} />
-                <PostComment postId={post._id} />
+                <PostComment postId={post.id} />
             </div>
             <div className="comments">
-                {post.comments.map(comment => (
-                    <CommentItem key={comment._id} comment={comment} postId={post._id} />
-                ))}
+                {post.comments && Array.isArray(post.comments) ? (
+    post.comments.map((comment) => (
+      <CommentItem key={comment.id} comment={comment} postId={post.id} />
+    ))
+  ) : (
+    <p>No comments yet.</p>
+  )}
             </div>
         </Fragment>
     );

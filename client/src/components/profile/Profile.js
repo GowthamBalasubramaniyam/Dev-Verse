@@ -14,17 +14,16 @@ const Profile = ({ getProfileById, profile: { profile, loading }, auth }) => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log(`Frontend: Profile component attempting to fetch ID: '${id}'`);
     getProfileById(id);
   }, [getProfileById, id]);
 
-
-  if (profile === null || loading) {
+  // 1. Loading State
+  if (loading || profile === null) {
     return <Spinner />;
   }
+  console.log('Component Render - profile data:', profile);
 
-  
-  if (!profile[0]) {
+  if (!profile || (!profile.user && !profile.email)) {
     return (
       <Fragment>
         <Link to="/profiles" className="btn btn-light">
@@ -35,34 +34,32 @@ const Profile = ({ getProfileById, profile: { profile, loading }, auth }) => {
     );
   }
 
-  const currentProfile = profile[0];
-
   return (
     <Fragment>
       <Link to="/profiles" className="btn btn-light">
         Back to Profiles
       </Link>
+      
       {auth.isAuthenticated &&
         !auth.loading &&
         auth.user &&
-        currentProfile.user && 
-        auth.user._id === currentProfile.user._id && ( 
+        (profile.userId === auth.user.id || profile.email === auth.user.email) && ( 
           <Link to="/edit-profile" className="btn btn-dark">
             Edit Profile
           </Link>
         )}
+
       <div className="profile-grid my-1">
-        {" "}
-        <ProfileTop profile={currentProfile} />
-        <ProfileAbout profile={currentProfile} /> 
+        <ProfileTop profile={profile} />
+        <ProfileAbout profile={profile} /> 
+
         <div className="profile-exp bg-white p-2">
-          {" "}
           <h2 className="text-primary">Experience</h2>
-          {currentProfile.experience && currentProfile.experience.length > 0 ? (
+          {profile.experience && profile.experience.length > 0 ? (
             <Fragment>
-              {currentProfile.experience.map((experience) => (
+              {profile.experience.map((experience) => (
                 <ProfileExperience
-                  key={experience._id}
+                  key={experience.id}
                   experience={experience}
                 />
               ))}
@@ -71,21 +68,22 @@ const Profile = ({ getProfileById, profile: { profile, loading }, auth }) => {
             <h4>No experience credentials</h4>
           )}
         </div>
+
         <div className="profile-edu bg-white p-2">
-          {" "}
           <h2 className="text-primary">Education</h2>
-          {currentProfile.education && currentProfile.education.length > 0 ? (
+          {profile.education && profile.education.length > 0 ? (
             <Fragment>
-              {currentProfile.education.map((education) => (
-                <ProfileEducation key={education._id} education={education} />
+              {profile.education.map((education) => (
+                <ProfileEducation key={education.id} education={education} />
               ))}
             </Fragment>
           ) : (
             <h4>No education credentials</h4>
           )}
         </div>
-        {currentProfile.githubusername && (
-          <ProfileGithub username={currentProfile.githubusername} />
+
+        {profile.githubusername && (
+          <ProfileGithub username={profile.githubusername} />
         )}
       </div>
     </Fragment>

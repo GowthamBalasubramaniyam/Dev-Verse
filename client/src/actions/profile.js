@@ -31,15 +31,16 @@ export const getCurrentProfile = () => async (dispatch) => {
   }
 };
 
-// Get all profile
+// Get all profiles
 export const getProfiles = () => async (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE }); // Clear current profile before fetching all profiles
+  dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await API.get("/api/profile");
 
     dispatch({
       type: GET_PROFILES,
-      payload: res.data,
+      // Change: Send res.data.content (the actual array) to the reducer
+      payload: res.data.content ? res.data.content : res.data,
     });
   } catch (err) {
     dispatch({
@@ -62,9 +63,11 @@ export const getProfileById = (userId) => async (dispatch) => {
       `Action: getProfileById(${userId}) - Preparing to dispatch GET_PROFILE with payload:`,
       res.data
     );
+    const data = res.data.content ? res.data.content[0] : res.data;
+
     dispatch({
       type: GET_PROFILE,
-      payload: res.data,
+      payload: data
     });
   } catch (err) {
     dispatch({
@@ -109,13 +112,24 @@ export const createProfile =
   (formData, navigate, edit = false) =>
   async (dispatch) => {
     try {
+      // 1. Transform skills: Convert comma-separated string to an Array
+      // This fixes the '400 Bad Request' mismatch between React and Java
+      const dataToSend = {
+        ...formData,
+        skills: typeof formData.skills === 'string' 
+          ? formData.skills.split(',').map(skill => skill.trim()) 
+          : formData.skills
+      };
+
       const config = {
         headers: {
           "Content-Type": "application/json",
+          // 2. Explicitly include token to prevent 'anonymousUser' errors
+          "Authorization": `Bearer ${localStorage.getItem('token')}`
         },
       };
 
-      const res = await API.post("/api/profile", formData, config);
+      const res = await API.post("/api/profile", dataToSend, config);
 
       dispatch({
         type: GET_PROFILE,
@@ -126,13 +140,21 @@ export const createProfile =
         setAlert(edit ? "Profile Updated" : "Profile Created", "success")
       );
 
+      // 3. Navigate only on success
       if (!edit) {
         navigate("/dashboard");
       }
     } catch (err) {
-      const errors = err.response?.data?.errors;
+      // 4. Enhanced error handling to show backend validation messages
+      const errors = err.response?.data; // Java usually sends a map of field:error
+      
       if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+        // If the backend returns a map of field errors, alert them
+        Object.keys(errors).forEach((key) => {
+          if (typeof errors[key] === 'string') {
+            dispatch(setAlert(`${key}: ${errors[key]}`, "danger"));
+          }
+        });
       }
 
       dispatch({
@@ -147,6 +169,7 @@ export const createProfile =
 
 // add experience to profile
 export const addExperience = (formData, navigate) => async (dispatch) => {
+  console.log("Sending Data:", formData);
   try {
     const config = {
       headers: {
@@ -301,8 +324,8 @@ export const uploadAvatar = (formData) => async (dispatch) => {
     });
 
     // Update avatar in all posts by this user
-    // Make sure your backend returns userId or use auth.user._id
-    const userId = res.data.userId || res.data.user || res.data._id;
+    // Make sure your backend returns userId or use auth.user.id
+    const userId = res.data.userId || res.data.user || res.data.id;
     if (userId && res.data.avatar) {
       dispatch(updateUserAvatarInPosts(userId, res.data.avatar));
     }

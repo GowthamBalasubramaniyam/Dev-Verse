@@ -10,21 +10,26 @@ const PostItem = ({
   removeLike,
   deletePost,
   auth,
-  post: { _id, text, name, user, likes, comments, date },
+  post: { id, text, name, avatar, user, likes, comments, date },
   showActions,
 }) => {
+
+  const defaultAvatar = '/uploads/avatars/default1.png';
+
+  const getAvatarSrc = (avatarData) => {
+    if (!avatarData || avatarData.trim() === '') return defaultAvatar;
+    if (avatarData.startsWith('data:image')) return avatarData;
+    
+    // If it's a stored path, ensure it has a leading slash
+    return avatarData.startsWith('/') ? avatarData : `/${avatarData}`;
+  };
   return (
     <div className="post bg-white p-1 my-1">
       <div>
-        <Link to={`/profile/${user._id || user}`}>
-          <img
-            src={
-              user.avatar ||
-              "//www.gravatar.com/avatar/9b473e5e0c6e0ae1e2a8708511284c66?s=200&r=pg&d=mm"
-            }
-            alt=""
-            className="round-img"
-          />
+        <Link to={`/profile/${user.id || user}`}>
+          <img src={getAvatarSrc(user.avatar || avatar)} alt="" className="round-img" onError={(e) => { 
+            console.log("Avatar failed to load, falling back to default.");
+            e.target.src = defaultAvatar;}}/>
           <h4>{user.name || name}</h4>
         </Link>
       </div>
@@ -36,26 +41,20 @@ const PostItem = ({
         {showActions && (
           <Fragment>
             <button
-              onClick={(e) => addLike(_id)}
+              onClick={(e) => addLike(id)}
               type="button"
               className="btn btn-light"
             >
               <i className="fas fa-thumbs-up"></i>{" "}
               <span>{likes.length > 0 && <span> {likes.length} </span>}</span>
             </button>
-            <button
-              onClick={(e) => removeLike(_id)}
-              type="button"
-              className="btn btn-light"
-            >
-              <i className="fas fa-thumbs-down"></i>
-            </button>
-            <Link to={`/posts/${_id}`} className="btn btn-primary">
+            
+            <Link to={`/posts/${id}`} className="btn btn-primary">
               Discussion {comments.length > 0 && <span>{comments.length}</span>}
             </Link>
-            {!auth.loading && (user._id || user) === auth.user._id && (
+            {!auth.loading && (user.id || user) === auth.user.id && (
               <button
-                onClick={(e) => deletePost(_id)}
+                onClick={(e) => deletePost(id)}
                 type="button"
                 className="btn btn-danger"
               >

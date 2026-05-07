@@ -7,13 +7,13 @@ import { deleteComment } from "../../actions/post";
 
 const CommentItem = ({
   postId,
-  comment: { _id, text, name, avatar, user, date },
+  comment: { id, text, name, avatar, user, date },
   auth,
   deleteComment,
 }) => (
   <div className="post bg-white p-1 my-1">
     <div>
-      <Link to={`/profile/${user._id || user}`}>
+      <Link to={`/profile/${user.id || user}`}>
         <img
           className="round-img"
           src={
@@ -31,9 +31,9 @@ const CommentItem = ({
       <p className="post-date">
         Posted on {format(new Date(date), "MMMM dd, yyyy")}
       </p>
-      {!auth.loading && (user._id || user) === auth.user._id && (
+      {!auth.loading && (user.id || user) === auth.user.id && (
         <button
-          onClick={(e) => deleteComment(postId, _id)}
+          onClick={(e) => deleteComment(postId, id)}
           type="button"
           className="btn btn-danger"
         >

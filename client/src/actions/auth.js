@@ -14,51 +14,59 @@ import setAuthToken from "../utils/setAuthToken";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token); // set token in axios headers
+  const token = localStorage.getItem('token');
+  
+  if (token) {
+    setAuthToken(token);
+  } else {
+    return dispatch({ type: AUTH_ERROR });
   }
 
   try {
-    const res = await API.get("/api/auth");
+    // FORCE the header here to ensure it's not null on the very first request
+    const res = await API.get('/api/auth', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
 
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
+    dispatch({ type: USER_LOADED, payload: res.data });
   } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-    });
+    dispatch({ type: AUTH_ERROR });
   }
 };
 
-// Register User
-export const register =
-  ({ name, email, password }) =>
-  async (dispatch) => {
-    const config = { headers: { "Content-Type": "application/json" } };
-    const body = JSON.stringify({ name, email, password });
+//register
+export const register = ({ name, email, password }) => async (dispatch) => {
+  const config = { headers: { "Content-Type": "application/json" } };
+  const body = JSON.stringify({ name, email, password });
 
-    try {
-      const res = await API.post("/api/users", body, config);
-      localStorage.setItem("token", res.data.token);
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
+  try {
+    const res = await API.post("/api/users", body, config);
 
-      setAuthToken(res.data.token); // ✅ set token before loading user
-      dispatch(loadUser()); // ✅ load user after registration
-    } catch (err) {
-      const errors = err.response?.data?.errors;
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-      }
-      dispatch({
-        type: REGISTER_FAIL,
-      });
+    // 1. Save to localStorage immediately
+    localStorage.setItem("token", res.data.token);
+
+    // 2. Update Axios headers BEFORE dispatching success
+    setAuthToken(res.data.token);
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data, // This contains the token and user info
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response?.data?.errors;
+    const message = err.response?.data?.message;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    } else if (message) {
+      dispatch(setAlert(message, "danger"));
     }
-  };
+
+    dispatch({ type: REGISTER_FAIL });
+  }
+};
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
@@ -66,23 +74,31 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await API.post("/api/auth", body, config);
+    const res = await API.post("/api/auth/login", body, config);
+
+    // 1. Save to localStorage immediately
     localStorage.setItem("token", res.data.token);
+
+    // 2. Update Axios headers
+    setAuthToken(res.data.token);
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
 
-    setAuthToken(res.data.token); // ✅ set token before loading user
-    dispatch(loadUser()); // ✅ load user after login
+    dispatch(loadUser());
   } catch (err) {
+    const message = err.response?.data?.message;
     const errors = err.response?.data?.errors;
+
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    } else if (message) {
+      dispatch(setAlert(message, "danger"));
     }
-    dispatch({
-      type: LOGIN_FAIL,
-    });
+
+    dispatch({ type: LOGIN_FAIL });
   }
 };
 

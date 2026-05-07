@@ -35,7 +35,7 @@ const Dashboard = ({
           <DashboardActions />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
-          {/* Add other components like Education, Skills, etc. here */}
+         
 
           <div>
             <button className="btn btn-danger" onClick={() => deleteAccount()}>

@@ -7,23 +7,32 @@ import { deleteExperience } from "../../actions/profile";
 const Experience = ({ experience, deleteExperience }) => {
   // Add safety check - if experience is undefined or not an array, use empty array
   const experiences = (experience || []).map((exp) => (
-    <tr key={exp._id}>
-      <td>{exp.company}</td>
-      <td className="hide-sm">{exp.title}</td>
-      <td>
-        {format(parseISO(exp.from), "yyyy/MM/dd")} -{" "}
-        {exp.to === null ? "Now" : format(parseISO(exp.to), "yyyy/MM/dd")}
-      </td>
-      <td>
-        <button
-          onClick={() => deleteExperience(exp._id)}
-          className="btn btn-danger"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
+  <tr key={exp.id}>
+    <td>{exp.company}</td>
+    <td className="hide-sm">{exp.title}</td>
+    <td>
+      {/* Check if fromDate is truthy (not null, not undefined) */}
+      {exp.from ? format(parseISO(exp.from), "yyyy/MM/dd") : "N/A"} -{" "}
+      
+      {/* Check for 'current' checkbox or if toDate exists */}
+      {exp.current ? (
+        "Now"
+      ) : exp.to ? (
+        format(parseISO(exp.to), "yyyy/MM/dd")
+      ) : (
+        "N/A"
+      )}
+    </td>
+    <td>
+      <button
+        onClick={() => deleteExperience(exp.id)}
+        className="btn btn-danger"
+      >
+        Delete
+      </button>
+    </td>
+  </tr>
+));
 
   return (
     <Fragment>

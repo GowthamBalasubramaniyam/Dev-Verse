@@ -32,11 +32,13 @@ export const getPosts = () => async (dispatch) => {
 export const addLike = (id) => async (dispatch) => {
   try {
     const res = await API.put(`/api/posts/like/${id}`);
+    
+    // Spring Boot returns the updated Post object
     dispatch({
       type: UPDATE_LIKES,
-      payload: { id, likes: res.data },
+      payload: { id, likes: res.data.likes },
     });
-    dispatch(getPosts()); // Refresh posts after liking
+    // No need to call getPosts() here if the payload is updated correctly!
   } catch (err) {
     dispatch({
       type: POST_ERROR,

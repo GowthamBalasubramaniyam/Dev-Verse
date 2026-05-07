@@ -1,4 +1,3 @@
-import React from "react";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -39,13 +38,20 @@ export default function auth(state = initialState, action) {
       localStorage.setItem("token", payload.token);
       return {
         ...state,
-        ...payload,
+        token : payload.token,
         isAuthenticated: true,
         loading: false,
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        loading: false // Important: set loading to false so PrivateRoute can act
+      };
     case LOGOUT:
     case ACCOUNT_DELETED:
       localStorage.removeItem("token");
@@ -56,6 +62,6 @@ export default function auth(state = initialState, action) {
         loading: false,
       };
     default:
-      return state;
+      return state; 
   }
 }

@@ -21,7 +21,7 @@ const Posts = ({getPosts, post:{ posts, loading}}) => {
       <PostForm />
       <div className="posts">
         {Array.isArray(posts) && posts.length > 0 ? (
-          posts.map((post) => <PostItem key={post._id} post={post} />)
+          posts.map((post) => <PostItem key={post.id} post={post} />)
         ) : (
           <h4>No posts found...</h4>
         )}

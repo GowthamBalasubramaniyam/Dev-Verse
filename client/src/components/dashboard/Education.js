@@ -7,23 +7,32 @@ import { deleteEducation } from "../../actions/profile";
 
 const Education = ({ education, deleteEducation }) => {
   const educations = (education || []).map((edu) => (
-    <tr key={edu._id}>
-      <td>{edu.school}</td>
-      <td className="hide-sm">{edu.degree}</td>
-      <td>
-        {format(parseISO(edu.from), "yyyy/MM/dd")} -{" "}
-        {edu.to === null ? "Now" : format(parseISO(edu.to), "yyyy/MM/dd")}
-      </td>
-      <td>
-        <button
-          onClick={() => deleteEducation(edu._id)}
-          className="btn btn-danger"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
+  <tr key={edu.id}>
+    <td>{edu.school}</td>
+    <td className="hide-sm">{edu.degree}</td>
+    <td>
+      {/* 1. Use fromDate and check for null/undefined */}
+      {edu.from ? format(parseISO(edu.from), "yyyy/MM/dd") : "N/A"} -{" "}
+      
+      {/* 2. Check current status or toDate */}
+      {edu.current ? (
+        "Now"
+      ) : edu.to ? (
+        format(parseISO(edu.to), "yyyy/MM/dd")
+      ) : (
+        "N/A"
+      )}
+    </td>
+    <td>
+      <button
+        onClick={() => deleteEducation(edu.id)}
+        className="btn btn-danger"
+      >
+        Delete
+      </button>
+    </td>
+  </tr>
+));
 
   return (
     <Fragment>

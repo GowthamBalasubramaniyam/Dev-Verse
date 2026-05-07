@@ -23,7 +23,7 @@ const AvatarUpload = ({ uploadAvatar, setAlert }) => {
       return;
     }
     const formData = new FormData();
-    formData.append("avatar", file);
+    formData.append("file", file);
     uploadAvatar(formData);
     setFile(null);
     setFileName("Choose a new avatar...");
@@ -48,12 +48,6 @@ const AvatarUpload = ({ uploadAvatar, setAlert }) => {
           onChange={onFileChange}
           accept="image/png, image/jpeg, image/gif"
         />
-
-        {/* 
-          --- THIS IS THE CRITICAL FIX ---
-          We are using a <button> element with type="button".
-          This prevents it from acting as a submit button for the parent form.
-        */}
         <button
           type="button"
           className="btn btn-primary"

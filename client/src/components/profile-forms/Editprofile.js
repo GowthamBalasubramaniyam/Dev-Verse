@@ -80,7 +80,25 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, navigate, !!profile);
+    const profileData = {
+    company: formData.company,
+    website: formData.website,
+    location: formData.location,
+    status: formData.status,
+    skills: formData.skills,
+    githubusername: formData.githubusername,
+    bio: formData.bio,
+    // Nest the social links here
+    social: {
+      twitter: formData.twitter,
+      facebook: formData.facebook,
+      linkedin: formData.linkedin,
+      youtube: formData.youtube,
+      instagram: formData.instagram
+    }
+  };
+
+  createProfile(profileData, navigate, !!profile);
   };
 
   return loading && profile === null ? (

@@ -6,6 +6,21 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const DashboardActions = ({ auth: { user } }) => {
+  const defaultAvatar = "/uploads/avatars/default1.png";
+
+  const getAvatarSource = (avatar) => {
+    // Check if avatar is null, undefined, or just empty spaces
+    if (!avatar || (typeof avatar === 'string' && avatar.trim() === "")) {
+       return defaultAvatar;
+    }
+    
+    // 1. Handle Base64 (your console showed these strings earlier)
+    if (avatar.startsWith("data:image")) return avatar;
+
+    // 2. Format file paths: fix backslashes and ensure a leading slash
+    const formattedPath = avatar.replace(/\\/g, "/");
+    return formattedPath.startsWith("/") ? formattedPath : `/${formattedPath}`;
+  };
   return (
     <div className="dash-buttons">
       <Link to="/edit-profile" className="btn btn-light">
@@ -21,10 +36,11 @@ const DashboardActions = ({ auth: { user } }) => {
       {/* --- AVATAR DISPLAY --- */}
       {user && (
         <img
-          // Replaced inline style with a class
           className="round-img avatar-small"
-          src={user.avatar ? user.avatar : "/default-avatar.png"}
+          src={getAvatarSource(user.avatar)}
           alt="User Avatar"
+          // Safety fallback if the path in DB is old/broken
+          onError={(e) => { e.target.src = defaultAvatar; }}
         />
       )}
     </div>
