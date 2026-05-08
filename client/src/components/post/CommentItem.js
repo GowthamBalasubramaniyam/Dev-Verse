@@ -24,7 +24,7 @@ const CommentItem = ({
             src={avatarSource}
             alt={user?.name || name}
             onError={(e) => {
-              e.target.src = "/default1.png";
+              e.target.src = "/uploads/avatars/default1.png";
             }}
           />
           <h4>{user?.name || name}</h4>
