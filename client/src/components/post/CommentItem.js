@@ -10,42 +10,47 @@ const CommentItem = ({
   comment: { id, text, name, avatar, user, date },
   auth,
   deleteComment,
-}) => (
-  <div className="post bg-white p-1 my-1">
-    <div>
-      <Link to={`/profile/${user.id || user}`}>
-        <img
-          className="round-img"
-          src={
-            user.avatar ||
-            avatar ||
-            "//www.gravatar.com/avatar/9b473e5e0c6e0ae1e2a8708511284c66?s=200&r=pg&d=mm"
-          }
-          alt=""
-        />
-        <h4>{user.name || name}</h4>
-      </Link>
+}) => {
+  // Use the user's uploaded avatar, the comment's avatar field, or a professional fallback
+  const avatarSource = (user && user.avatar) || avatar || "/default-avatar.png";
+
+  return (
+    <div className="post bg-white p-1 my-1">
+      <div>
+        {/* Link to the profile using the user ID */}
+        <Link to={`/profile/${user?.id || user}`}>
+          <img
+            className="round-img"
+            src={avatarSource}
+            alt={user?.name || name}
+            onError={(e) => {
+              e.target.src = "/default1.png";
+            }}
+          />
+          <h4>{user?.name || name}</h4>
+        </Link>
+      </div>
+      <div>
+        <p className="my-1">{text}</p>
+        <p className="post-date">
+          Posted on {format(new Date(date), "MMMM dd, yyyy")}
+        </p>
+        {!auth.loading && auth.user && (user?.id || user) === auth.user.id && (
+          <button
+            onClick={() => deleteComment(postId, id)}
+            type="button"
+            className="btn btn-danger"
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        )}
+      </div>
     </div>
-    <div>
-      <p className="my-1">{text}</p>
-      <p className="post-date">
-        Posted on {format(new Date(date), "MMMM dd, yyyy")}
-      </p>
-      {!auth.loading && (user.id || user) === auth.user.id && (
-        <button
-          onClick={(e) => deleteComment(postId, id)}
-          type="button"
-          className="btn btn-danger"
-        >
-          <i className="fas fa-times"></i>
-        </button>
-      )}
-    </div>
-  </div>
-);
+  );
+};
 
 CommentItem.propTypes = {
-  postId: PropTypes.string.isRequired, // Changed from number to string (MongoDB ObjectId)
+  postId: PropTypes.string.isRequired,
   comment: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   deleteComment: PropTypes.func.isRequired,
