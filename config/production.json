@@ -1,7 +1,0 @@
-{
-    "mongoDBURI": "mongodb+srv://gowthambalasubramaniyam96:DevConnector@cluster0.teed0ui.mongodb.net/",
-    "JWTSecret": "DevConnectorSecretKey",
-    "port": 5000,
-    "GithubClientId": "Ov23liCaO8Y4AgOMTMiI",
-    "GithubClientSecret": "cd5169ed63c371cd7c49119523b0c48a4c3f0d6f"
-}
