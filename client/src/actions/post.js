@@ -32,7 +32,7 @@ export const getPosts = () => async (dispatch) => {
 export const addLike = (id) => async (dispatch) => {
   try {
     const res = await API.put(`/api/posts/like/${id}`);
-    
+
     // Spring Boot returns the updated Post object
     dispatch({
       type: UPDATE_LIKES,
@@ -91,18 +91,36 @@ export const addPost = (formData) => async (dispatch) => {
       "Content-Type": "application/json",
     },
   };
+
   try {
     const res = await API.post("/api/posts", formData, config);
+
     dispatch({
       type: ADD_POST,
       payload: res.data,
     });
-    dispatch(setAlert("Post created", "success"));
+
+    dispatch(setAlert("Post created successfully", "success"));
     dispatch(getPosts()); // Refresh posts after adding a new one
   } catch (err) {
+    // 1. Check if our Spring Boot backend sent a custom error message
+    const errorMsg = err.response?.data?.msg;
+
+    // 2. If the AI rejected it (or another custom error occurred), show it to the user
+    if (errorMsg) {
+      dispatch(setAlert(errorMsg, "danger"));
+    } else {
+      // Fallback for general server crashes
+      dispatch(setAlert("Error creating post", "danger"));
+    }
+
+    // 3. Dispatch the error state to Redux
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: {
+        msg: err.response?.statusText || "Server Error",
+        status: err.response?.status || 500,
+      },
     });
   }
 };
@@ -134,7 +152,7 @@ export const addComment = (postId, formData) => async (dispatch) => {
     const res = await API.post(
       `/api/posts/comment/${postId}`,
       formData,
-      config
+      config,
     );
     dispatch({
       type: ADD_COMMENT,

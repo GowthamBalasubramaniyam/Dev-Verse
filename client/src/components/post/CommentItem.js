@@ -11,13 +11,11 @@ const CommentItem = ({
   auth,
   deleteComment,
 }) => {
-  // Use the user's uploaded avatar, the comment's avatar field, or a professional fallback
   const avatarSource = (user && user.avatar) || avatar || "/default-avatar.png";
 
   return (
     <div className="post bg-white p-1 my-1">
       <div>
-        {/* Link to the profile using the user ID */}
         <Link to={`/profile/${user?.id || user}`}>
           <img
             className="round-img"
